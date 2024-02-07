@@ -1,4 +1,7 @@
-/* FONTS */
+// Imports
+@import "Constants";
+
+// Fonts
 /* fredoka-300 - latin */
 @font-face {
   font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
@@ -40,7 +43,7 @@
   src: url("./fonts/fredoka-v14-latin-700.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
-/* RESET */
+// Reset
 * {
   box-sizing: border-box;
   font-family: "Fredoka";
@@ -52,21 +55,56 @@ body {
   margin: 0;
 }
 
-/* STYLES */
-.chromatic-aberration--text {
-  text-shadow: -2px -2px 0 #58dffc, 2px 2px 0 #fa68bd;
+// Mixins
+@mixin chromatic-aberration-text {
+  text-shadow: -2px -2px 0 $blue-light, 2px 2px 0 $pink;
 }
 
-.chromatic-aberration--text:hover {
-  text-shadow: -2px -2px 0 #fa68bd, 2px 2px 0 #58dffc;
+@mixin chromatic-aberration-text--hover {
+  &:hover {
+    text-shadow: -2px -2px 0 $pink, 2px 2px 0 $blue-light;
+  }
 }
 
-.chromatic-aberration--box {
-  box-shadow: -2px -2px 0 #58dffc, 2px 2px 0 #fa68bd;
+@mixin chromatic-aberration-box {
+  box-shadow: -2px -2px 0 $blue-light, 2px 2px 0 $pink;
   border-radius: 10px;
 }
 
-.chromatic-aberration--box:hover {
-  box-shadow: -2px -2px 0 #fa68bd, 2px 2px 0 #58dffc;
-  border-radius: 10px;
+@mixin chromatic-aberration-box--hover {
+  &:hover {
+    box-shadow: -2px -2px 0 $pink, 2px 2px 0 $blue-light;
+    border-radius: 10px;
+  }
+}
+
+@mixin pointer {
+  cursor: pointer;
+}
+
+@mixin chromatic-button {
+  @include chromatic-aberration-box;
+  @include chromatic-aberration-box--hover;
+  @include pointer;
+
+  padding: 10px 40px;
+  margin: 10px;
+  color: $yellow;
+  background-color: #220144;
+  font-size: 32px;
+  font-weight: 500;
+  text-shadow: 1px 1px 0 $blue-dark, -1px 1px 0 $blue-dark,
+    -1px -1px 0 $blue-dark, 1px -1px 0 $blue-dark;
+
+  &:hover {
+    background-color: $yellow;
+    text-shadow: none;
+    color: $purple-black;
+  }
+}
+
+// Styles
+a {
+  text-decoration: none;
+  color: $yellow;
 }
