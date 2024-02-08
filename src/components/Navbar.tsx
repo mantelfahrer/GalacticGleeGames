@@ -2,6 +2,7 @@ import React from "react";
 import "./Navbar.scss";
 import clsx from "clsx";
 import { Link } from "react-router-dom";
+import Button from "./Button";
 
 type Props = {};
 
@@ -32,7 +33,7 @@ const Navbar = (props: Props) => {
         >
           MENU
         </div>
-        <div className="login-button">Login</div>
+        <Button className="login-button">Login</Button>
       </div>
       <nav
         className={clsx(
@@ -61,6 +62,7 @@ const Navbar = (props: Props) => {
         </Link>
         <div className="spacer"></div>
       </nav>
+      <div className="navbar-spacer"></div>
     </>
   );
 };

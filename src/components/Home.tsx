@@ -1,9 +1,14 @@
 import React from "react";
+import Stage from "./Stage";
 
 type Props = {};
 
 const Home = (props: Props) => {
-  return <div>Home</div>;
+  return (
+    <>
+      <Stage />
+    </>
+  );
 };
 
 export default Home;

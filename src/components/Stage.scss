@@ -1,0 +1,74 @@
+@import "../App.scss";
+
+.stage {
+  background-image: url(../images/Game2/Screenshot-title.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: right;
+  height: 80vh;
+  position: relative;
+}
+
+.background-overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: $overlay-blue-light;
+}
+
+.stage__text-block {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 3em;
+}
+
+.stage__title {
+  font-size: 48px;
+  font-weight: 400;
+  margin-bottom: 1em;
+
+  &-chromatic {
+    font-weight: 600;
+    @include chromatic-aberration-text;
+  }
+}
+
+.stage__subtitle {
+  margin: 0;
+  padding: o;
+  font-size: 24px;
+}
+
+.stage__image {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 10%);
+  width: 90%;
+  max-width: 525px;
+}
+
+@media only screen and (min-width: 641px) {
+}
+
+@media only screen and (min-width: 1008px) {
+  .stage__text-block {
+    padding: 5em 10vw;
+  }
+
+  .stage__title {
+    font-size: 64px;
+  }
+
+  .stage__subtitle {
+    margin: 0;
+    padding: o;
+    font-size: 36px;
+  }
+  .stage__image {
+    left: unset;
+    right: 0;
+    transform: translate(0, 10%);
+  }
+}
