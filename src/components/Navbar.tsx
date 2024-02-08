@@ -45,11 +45,20 @@ const Navbar = (props: Props) => {
               key={route.name}
               to={route.path}
               onClick={() => setMenuOpen(false)}
+              className="menu-item"
             >
               {route.name}
             </Link>
           );
         })}
+        <Link
+          key="Login"
+          to="/login"
+          onClick={() => setMenuOpen(false)}
+          className="login-link"
+        >
+          Login
+        </Link>
         <div className="spacer"></div>
       </nav>
     </>
