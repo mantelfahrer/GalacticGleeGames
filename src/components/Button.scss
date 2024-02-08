@@ -1,6 +1,32 @@
 @import "../App";
 
 .button {
-  @include chromatic-button;
-  border: none;
+  @include chromatic-aberration-box;
+  @include chromatic-aberration-box--hover;
+  @include pointer;
+
+  white-space: nowrap;
+  padding: 10px 40px;
+  margin: 10px;
+  color: $yellow;
+  background-color: #220144;
+  font-weight: 500;
+  font-size: 32px;
+  text-shadow: 1px 1px 0 $blue-dark, -1px 1px 0 $blue-dark,
+    -1px -1px 0 $blue-dark, 1px -1px 0 $blue-dark;
+
+  &:hover {
+    background-color: $yellow;
+    text-shadow: none;
+    color: $purple-black;
+  }
+}
+
+@media only screen and (min-width: 641px) {
+}
+
+@media only screen and (min-width: 1008px) {
+  .button {
+    font-size: 20px;
+  }
 }

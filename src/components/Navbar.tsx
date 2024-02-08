@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import "./Navbar.scss";
 import clsx from "clsx";
 import { Link } from "react-router-dom";
@@ -6,7 +6,7 @@ import Button from "./Button";
 
 type Props = {};
 
-const Navbar = (props: Props) => {
+const Navbar: FC = (props: Props) => {
   const [menuOpen, setMenuOpen] = React.useState<boolean>(false);
 
   const routes = [
@@ -33,7 +33,7 @@ const Navbar = (props: Props) => {
         >
           MENU
         </div>
-        <Button className="login-button">Login</Button>
+        <Button to="/login" className="login-button">Login</Button>
       </div>
       <nav
         className={clsx(

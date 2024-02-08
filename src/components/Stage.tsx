@@ -1,10 +1,10 @@
-import React from "react";
+import React, { FC } from "react";
 import "./Stage.scss";
 import character from "../images/Characters/sci-fi-character.png";
 
 type Props = {};
 
-const Stage = (props: Props) => {
+const Stage: FC = (props: Props) => {
   return (
     <div className="stage">
       <div className="background-overlay"></div>

@@ -1,0 +1,23 @@
+@import "../App.scss";
+
+.call-to-action {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.call-to-action__text {
+  color: $yellow;
+  font-size: 20px;
+}
+
+@media only screen and (min-width: 641px) {
+}
+
+@media only screen and (min-width: 1008px) {
+  .call-to-action {
+    flex-direction: row;
+  }
+}

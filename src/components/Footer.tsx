@@ -1,10 +1,10 @@
-import React from "react";
+import React, { FC } from "react";
 import "./Footer.scss";
 import { Link } from "react-router-dom";
 
 type Props = {};
 
-const Footer = (props: Props) => {
+const Footer: FC = (props: Props) => {
   const routes = [
     { path: "/privacy", name: "Privacy Policy" },
     { path: "/cookie", name: "Cookie Policy" },
