@@ -3,6 +3,7 @@ import Stage from "./Stage";
 import Button from "./Button";
 import "./Home.scss";
 import Layout from "./Layout";
+import Games from "./Games";
 
 type Props = {};
 
@@ -22,6 +23,7 @@ const Home: FC = (props: Props) => {
           <Button to="/signup">Sign me up!</Button>
         </div>
       </Layout>
+      <Games />
     </>
   );
 };

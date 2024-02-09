@@ -101,3 +101,9 @@ a {
 body {
   background-color: $purple-black;
 }
+
+.title {
+  font-size: 40px;
+  @include chromatic-aberration-text;
+  color: $yellow;
+}
