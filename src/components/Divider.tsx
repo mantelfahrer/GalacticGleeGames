@@ -4,7 +4,7 @@ type Props = {}
 
 const Divider: FC = (props: Props) => {
   return (
-    <div style={{ width: "100%", height: "2rem"}}></div>
+    <div style={{ width: "100%", height: "3rem"}}></div>
   )
 }
 
