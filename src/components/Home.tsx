@@ -5,6 +5,8 @@ import "./Home.scss";
 import Layout from "./Layout";
 import Games from "./Games";
 import backgroundImage from "../images/Game2/Screenshot-title.png";
+import News from "./News";
+import Divider from "./Divider";
 
 type Props = {};
 
@@ -24,6 +26,8 @@ const Home: FC = (props: Props) => {
           <Button to="/signup">Sign me up!</Button>
         </div>
         <Games />
+        <News short/>
+        <Divider />
       </Layout>
     </>
   );
