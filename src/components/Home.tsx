@@ -4,14 +4,15 @@ import Button from "./Button";
 import "./Home.scss";
 import Layout from "./Layout";
 import Games from "./Games";
+import backgroundImage from "../images/Game2/Screenshot-title.png";
 
 type Props = {};
 
 const Home: FC = (props: Props) => {
   return (
     <>
-      <Stage />
-      <Layout>
+      <Layout backgroundImage={backgroundImage} color="blue-light">
+        <Stage />
         <div className="call-to-action">
           <p className="call-to-action__text">
             Join our <span className="bold">community</span> for a unique
@@ -22,8 +23,8 @@ const Home: FC = (props: Props) => {
           </p>
           <Button to="/signup">Sign me up!</Button>
         </div>
+        <Games />
       </Layout>
-      <Games />
     </>
   );
 };

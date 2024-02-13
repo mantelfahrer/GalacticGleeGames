@@ -1,6 +1,7 @@
 @import "../App.scss";
 
 .call-to-action {
+  @include padding;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

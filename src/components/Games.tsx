@@ -7,7 +7,6 @@ import character1 from "../images/Characters/sci-fi-character-3.png";
 import game2Screen1 from "../images/Game1/Screenshot-1.png";
 import game2Screen2 from "../images/Game1/Screenshot-2.png";
 import character2 from "../images/Characters/sci-fi-character-2.png";
-import Layout from "./Layout";
 import GameOverview from "./GameOverview";
 import Divider from "./Divider";
 
@@ -15,10 +14,8 @@ type Props = {};
 
 const Games: FC = (props: Props) => {
   return (
-    <>
-      <Layout>
-        <Title>Our Games</Title>
-      </Layout>
+    <div className="maxWidth">
+      <Title>Our Games</Title>
       <GameOverview
         image1={game1Screen1}
         image2={game1Screen2}
@@ -34,7 +31,7 @@ const Games: FC = (props: Props) => {
         name="Robot Tactics"
         color="pink"
       />
-    </>
+    </div>
   );
 };
 

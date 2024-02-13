@@ -1,9 +1,8 @@
 import React, { FC } from "react";
-import Layout from "./Layout";
 import Button from "./Button";
 import card from "../images/UI/card.png";
 import "./GameOverview.scss";
-import clsx from 'clsx';
+import clsx from "clsx";
 
 type Props = {
   image1: string;
@@ -40,7 +39,14 @@ const GameOverview: FC<Props> = ({
         <img
           className="game__image"
           src={image1}
-          alt="screenshot form a game"
+          alt="screenshot from a game"
+        />
+        <div className="game__gradient-gap game__gradient-gap--first"></div>
+        <div className="game__gradient-gap game__gradient-gap--second"></div>
+        <img
+          className="game__image"
+          src={image2}
+          alt="screenshot from a game"
         />
         <div
           className="game__name"
@@ -53,27 +59,34 @@ const GameOverview: FC<Props> = ({
           <p className={clsx("game__name-text", getColor())}>{name}</p>
         </div>
       </div>
-      <Layout>
-        <div className="game__cta">
-          <p className="game__cta-text">
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-            erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-            et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
-            Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-            sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-            et dolore magna aliquyam erat, sed diam voluptua.
-          </p>
-          <div className="game__cta-wrapper">
-            <Button to="/game/cityrun-adventure">To the Game</Button>
-            <img
-              src={character}
-              alt="sci-fi game character"
-              className="game__cta-character"
-            />
-          </div>
+      <div className="game__cta">
+        <p className="game__cta-text">
+          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+          nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+          sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
+          rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+          ipsum dolor sit amet. <br />
+          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+          nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+          sed diam voluptua. Duis autem vel eum iriure dolor in hendrerit in
+          vulputate velit esse molestie consequat, vel illum dolore eu feugiat
+          nulla facilisis at vero eros et accumsan et iusto odio dignissim qui
+          blandit praesent luptatum zzril delenit augue duis dolore te feugait
+          nulla facilisi. <br /> <br />
+          Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
+          nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat
+          volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
+          ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+        </p>
+        <div className="game__cta-wrapper">
+          <Button to="/game/cityrun-adventure">To the Game</Button>
+          <img
+            src={character}
+            alt="sci-fi game character"
+            className="game__cta-character"
+          />
         </div>
-      </Layout>
+      </div>
     </div>
   );
 };

@@ -1,19 +1,8 @@
 @import "../App.scss";
 
 .stage {
-  background-image: url(../images/Game2/Screenshot-title.png);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: right;
   height: 80vh;
   position: relative;
-}
-
-.background-overlay {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  background-color: $overlay-blue-light;
 }
 
 .stage__text-block {
@@ -21,6 +10,7 @@
   top: 0;
   left: 0;
   padding: 3em;
+  width: 100%;
 }
 
 .stage__title {
@@ -68,7 +58,7 @@
   }
   .stage__image {
     left: unset;
-    right: 0;
+    right: 10vw;
     transform: translate(0, 10%);
   }
 }

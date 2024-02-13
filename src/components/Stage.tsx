@@ -7,7 +7,6 @@ type Props = {};
 const Stage: FC = (props: Props) => {
   return (
     <div className="stage">
-      <div className="background-overlay"></div>
       <img
         className="stage__image"
         src={character}
