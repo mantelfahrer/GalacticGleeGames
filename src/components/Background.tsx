@@ -16,6 +16,7 @@ const Background: FC<Props> = ({ backgroundImage, color }) => {
       <div
         className={clsx("background__overlay", `background__overlay--${color}`)}
       ></div>
+      <div className="background__gradient"></div>
     </div>
   );
 };
