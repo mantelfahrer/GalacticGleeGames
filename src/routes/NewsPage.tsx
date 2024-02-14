@@ -1,7 +1,7 @@
 import React, { FC } from "react";
-import News from "./News";
-import Divider from "./Divider";
-import Layout from "./Layout";
+import News from "../components/News";
+import Divider from "../components/Divider";
+import Layout from "../components/Layout";
 import backgroundImage from '../images/News/news-background.png';
 
 type Props = {};

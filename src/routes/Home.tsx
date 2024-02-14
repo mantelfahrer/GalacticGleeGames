@@ -1,12 +1,12 @@
 import React, { FC } from "react";
-import Stage from "./Stage";
-import Button from "./Button";
+import Stage from "../components/Stage";
+import Button from "../components/Button";
 import "./Home.scss";
-import Layout from "./Layout";
-import Games from "./Games";
+import Layout from "../components/Layout";
+import Games from "../components/Games";
 import backgroundImage from "../images/Game2/Screenshot-title.png";
-import News from "./News";
-import Divider from "./Divider";
+import News from "../components/News";
+import Divider from "../components/Divider";
 
 type Props = {};
 
