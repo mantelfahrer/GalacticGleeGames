@@ -98,6 +98,12 @@ h6 {
   }
 }
 
+@mixin truncateTextEllipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 // Styles
 a {
   text-decoration: none;

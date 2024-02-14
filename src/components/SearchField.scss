@@ -1,0 +1,44 @@
+@import "../App.scss";
+
+.searchfield {
+  @include chromatic-aberration-box;
+  width: 350px;
+  height: 3rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: $overlay-pink;
+}
+
+.searchfield__input {
+  border: none;
+  height: 100%;
+  font-size: 20px;
+  border-radius: 10px;
+  padding: 1rem;
+  flex-grow: 1;
+  background-color: transparent;
+  color: $yellow;
+
+  &::placeholder {
+    color: $yellow;
+    opacity: 0.8;
+  }
+}
+
+.searchfield__icon {
+  height: 100%;
+  width: 50px;
+  padding: 5px;
+  background-color: transparent;
+  border-radius: 10px;
+  @include pointer;
+
+  &:hover {
+    background-color: $pink;
+  }
+
+  &:active {
+    background-color: $blue-light;
+  }
+}

@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import NewsPage from "./routes/NewsPage";
 import GamesPage from "./routes/GamesPage";
 import GameDetails from "./routes/GameDetails";
+import Community from "./routes/Community";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/news" element={<NewsPage />} />
         <Route path="/games/:gameName" element={<GameDetails />} />
         <Route path="/games" element={<GamesPage />} />
+        <Route path="/community" element={<Community />} />
       </Routes>
       <Footer />
     </>

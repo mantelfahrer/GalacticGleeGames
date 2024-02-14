@@ -1,0 +1,63 @@
+@import "../App.scss";
+
+.community {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.forum {
+  margin: 2rem 0;
+  width: 100%;
+  background-color: $overlay-pink;
+  border-radius: 10px;
+}
+
+.forum__title {
+  @include padding;
+  width: 100%;
+  font-size: 28px;
+  color: $yellow;
+}
+
+.post {
+  padding: 0.5rem 1rem;
+  display: flex;
+  flex-direction: row;
+  font-size: 20px;
+
+  &:nth-child(even) {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 254, 217, 1) 0%,
+      rgba(255, 254, 217, 0) 100%
+    );
+  }
+
+  &:nth-child(odd) {
+    background: linear-gradient(
+      90deg,
+      rgba(250, 104, 189, 1) 0%,
+      rgba(250, 104, 189, 0) 100%
+    );
+  }
+}
+
+.post__username {
+  @include truncateTextEllipsis;
+  width: 250px;
+  font-weight: 600;
+  flex: 0 5 auto;
+}
+
+.post__topic {
+  @include truncateTextEllipsis;
+  width: 50%;
+  flex: 1 1 auto;
+}
+
+.post__messages {
+  @include truncateTextEllipsis;
+  width: 50px;
+  flex: 0 0 auto;
+}
