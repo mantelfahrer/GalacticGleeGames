@@ -17,18 +17,18 @@ const Games: FC = (props: Props) => {
     <div className="maxWidth">
       <Title>Our Games</Title>
       <GameOverview
-        image1={game1Screen1}
-        image2={game1Screen2}
+        images={[game1Screen1, game1Screen2]}
         character={character1}
         name="Cityrun Adventure"
-        color="blue"
+        to="/games/cityrunadventure"
+        color="blue-light"
       />
       <Divider />
       <GameOverview
-        image1={game2Screen1}
-        image2={game2Screen2}
+        images={[game2Screen1, game2Screen2]}
         character={character2}
         name="Robot Tactics"
+        to="/games/robottactics"
         color="pink"
       />
     </div>

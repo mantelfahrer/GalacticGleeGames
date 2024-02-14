@@ -1,10 +1,11 @@
 import React, { FC } from "react";
 import "./Layout.scss";
 import Background from "./Background";
+import { Color } from "../models/Color";
 
 interface Props extends React.PropsWithChildren {
-  backgroundImage: string;
-  color: "blue-light" | "blue-dark" | "pink" | "yellow" | "green";
+  backgroundImage?: string;
+  color?: Color;
 }
 
 const Layout: FC<Props> = ({ children, backgroundImage, color }) => {

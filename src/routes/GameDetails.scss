@@ -1,0 +1,129 @@
+@import "../App.scss";
+
+.game-details {
+}
+
+.game-details__name-wrapper {
+  width: 100%;
+  height: calc(140px + 20vw);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-details__name {
+  width: 350px;
+  height: 90px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-details__name-text {
+  font-size: 36px;
+  font-weight: 600;
+}
+
+.game-details__description {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+}
+
+.game-details__text {
+  font-size: 20px;
+  text-align: center;
+  padding: 2rem;
+  margin: 0;
+  border-radius: 10px;
+  background-color: $purple-black;
+  color: $yellow;
+  max-width: 95%;
+}
+
+.game-details__character {
+  width: 300px;
+}
+
+.game-details__presentation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 5rem;
+}
+
+.game-details__images {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.game-details__image {
+  width: 90%;
+  margin-top: -2rem;
+  box-shadow: -1px -1px 10px $purple-black;
+
+  &--first {
+    margin-top: 1rem;
+  }
+
+  &--odd {
+    align-self: flex-end;
+  }
+
+  &--even {
+    align-self: flex-start;
+  }
+}
+
+@media only screen and (min-width: 641px) {
+  .game-details__name {
+    width: 500px;
+    height: 120px;
+  }
+
+  .game-details__name-text {
+    font-size: 50px;
+  }
+
+  .game-details__image {
+    width: 80%;
+  }
+}
+
+@media only screen and (min-width: 1008px) {
+  .game-details__name-wrapper {
+    width: 100%;
+    height: calc(140px + 45vh);
+  }
+
+  .game-details__name {
+    width: 600px;
+    height: 140px;
+  }
+
+  .game-details__name-text {
+    font-size: 60px;
+  }
+
+  .game-details__description {
+    flex-direction: row;
+  }
+
+  .game-details__character {
+    padding-left: 1rem;
+  }
+
+  .game-details__image {
+    max-width: 52%;
+    margin-top: -250px;
+
+    &--first {
+      margin-top: 2rem;
+    }
+  }
+}

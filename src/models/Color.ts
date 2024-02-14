@@ -1,0 +1,1 @@
+export type Color = "blue-light" | "blue-dark" | "pink" | "yellow" | "green";

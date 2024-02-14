@@ -1,12 +1,13 @@
 import React, { FC } from "react";
 import clsx from "clsx";
 import "./NewsCard.scss";
+import { Color } from "../models/Color";
 
 type Props = {
   headline: string;
   text: string;
   backgroundImage: string;
-  color: "blue-light" | "blue-dark" | "pink" | "yellow" | "green";
+  color: Color;
 };
 
 const NewsCard: FC<Props> = ({ headline, text, backgroundImage, color }) => {

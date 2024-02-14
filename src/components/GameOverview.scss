@@ -111,8 +111,16 @@
   color: $pink;
 }
 
-.text-blue {
+.text-blue-light {
   color: $blue-light;
+}
+
+.text-blue-dark {
+  color: $blue-dark;
+}
+
+.text-yellow {
+  color: $yellow;
 }
 
 @media only screen and (min-width: 641px) {

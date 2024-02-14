@@ -1,8 +1,7 @@
-import React, { FC } from "react";
-import "./Navbar.scss";
 import clsx from "clsx";
+import React, { FC } from "react";
 import { Link } from "react-router-dom";
-import Button from "./Button";
+import "./Navbar.scss";
 
 type Props = {};
 
@@ -33,7 +32,14 @@ const Navbar: FC = (props: Props) => {
         >
           MENU
         </div>
-        <Button to="/login" className="login-button">Login</Button>
+        <Link
+          key="Login"
+          to="/login"
+          onClick={() => setMenuOpen(false)}
+          className="login-button"
+        >
+          Login
+        </Link>
       </div>
       <nav
         className={clsx(

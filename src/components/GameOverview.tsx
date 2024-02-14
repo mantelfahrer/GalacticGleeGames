@@ -3,30 +3,29 @@ import Button from "./Button";
 import card from "../images/UI/card.png";
 import "./GameOverview.scss";
 import clsx from "clsx";
+import { GameData } from "../models/GameData";
 
-type Props = {
-  image1: string;
-  image2: string;
-  character: string;
-  name: string;
-  color?: string;
-};
+type Props = GameData;
 
 const GameOverview: FC<Props> = ({
-  image1,
-  image2,
+  images,
   character,
   name,
+  to,
   color,
 }) => {
   const getColor = () => {
     switch (color) {
       case "green":
         return "text-green";
+      case "yellow":
+        return "text-yellow";
       case "pink":
         return "text-pink";
-      case "blue":
-        return "text-blue";
+      case "blue-light":
+        return "text-blue-light";
+      case "blue-dark":
+        return "text-blue-dark";
       default:
         return "text-green";
     }
@@ -38,14 +37,14 @@ const GameOverview: FC<Props> = ({
       <div className="game__overview">
         <img
           className="game__image"
-          src={image1}
+          src={images[0]}
           alt="screenshot from a game"
         />
         <div className="game__gradient-gap game__gradient-gap--first"></div>
         <div className="game__gradient-gap game__gradient-gap--second"></div>
         <img
           className="game__image"
-          src={image2}
+          src={images[1]}
           alt="screenshot from a game"
         />
         <div
@@ -79,7 +78,7 @@ const GameOverview: FC<Props> = ({
           ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
         </p>
         <div className="game__cta-wrapper">
-          <Button to="/game/cityrun-adventure">To the Game</Button>
+          <Button to={to}>To the Game</Button>
           <img
             src={character}
             alt="sci-fi game character"
