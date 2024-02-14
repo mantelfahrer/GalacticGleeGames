@@ -74,6 +74,7 @@ const News: FC<Props> = ({ short }) => {
           } else {
             return (
               <NewsCard
+                key={article.headline}
                 headline={article.headline}
                 text={article.text}
                 color={article.color}
