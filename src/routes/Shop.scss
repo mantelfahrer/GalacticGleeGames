@@ -1,0 +1,9 @@
+@import '../App.scss';
+
+.shop {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 2rem;
+}

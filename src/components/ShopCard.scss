@@ -1,0 +1,91 @@
+@import "../App.scss";
+
+.shopcard {
+  width: 300px;
+  height: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1rem;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: top;
+  position: relative;
+  border-radius: 10px;
+}
+
+.shopcard__title {
+  margin: 0;
+  padding-top: 0.5rem;
+  font-size: 20px;
+  color: $yellow;
+}
+
+.shopcard__link {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  border-radius: 10px;
+  color: $purple-black;
+  font-weight: 500;
+  font-size: 24px;
+
+  &--blue-light {
+    background-color: $blue-light;
+
+    &:hover {
+      background: linear-gradient(
+        0deg,
+        rgba($blue-light, 1) 0%,
+        rgba($blue-light, 0) 100%
+      );
+    }
+  }
+
+  &--blue-dark {
+    background-color: $blue-dark;
+
+    &:hover {
+      background: linear-gradient(
+        0deg,
+        rgba($blue-dark, 1) 0%,
+        rgba($blue-dark, 0) 100%
+      );
+    }
+  }
+
+  &--pink {
+    background-color: $pink;
+
+    &:hover {
+      background: linear-gradient(0deg, rgba($pink, 1) 0%, rgba($pink, 0) 100%);
+    }
+  }
+
+  &--yellow {
+    background-color: $yellow;
+
+    &:hover {
+      background: linear-gradient(
+        0deg,
+        rgba($yellow, 1) 0%,
+        rgba($yellow, 0) 100%
+      );
+    }
+  }
+
+  &--green {
+    background-color: $green;
+
+    &:hover {
+      background: linear-gradient(
+        0deg,
+        rgba($green, 1) 0%,
+        rgba($green, 0) 100%
+      );
+    }
+  }
+}
