@@ -6,25 +6,40 @@
   align-items: center;
 }
 
-.forum {
-  margin: 2rem 0;
+.community__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
+  margin: 2rem 0;
+  gap: 2rem;
+}
+
+.forum {
+  padding-bottom: 3rem;
+  width: 100%;
+  max-width: 641px;
   background-color: $overlay-pink;
   border-radius: 10px;
+
+  &--topics {
+    background-color: $overlay-blue-light;
+    max-width: 420px;
+  }
 }
 
 .forum__title {
-  @include padding;
+  padding: 2rem;
   width: 100%;
   font-size: 28px;
   color: $yellow;
 }
 
 .post {
-  padding: 0.5rem 1rem;
+  padding: 1rem 0;
   display: flex;
   flex-direction: row;
-  font-size: 20px;
+  font-size: 16px;
 
   &:nth-child(even) {
     background: linear-gradient(
@@ -41,23 +56,54 @@
       rgba(250, 104, 189, 0) 100%
     );
   }
+
+  &--topics {
+    &:nth-child(odd) {
+      background: linear-gradient(
+        90deg,
+        rgba(88, 223, 252, 1) 0%,
+        rgba(88, 223, 252, 0) 100%
+      );
+    }
+  }
 }
 
 .post__username {
   @include truncateTextEllipsis;
-  width: 250px;
   font-weight: 600;
-  flex: 0 5 auto;
+  flex: 0 10 auto;
+  padding: 0 1rem;
+  margin: 0;
 }
 
 .post__topic {
   @include truncateTextEllipsis;
   width: 50%;
   flex: 1 1 auto;
+  padding: 0 1rem;
+  margin: 0;
+
+  &--bold {
+    font-weight: 600;
+  }
 }
 
 .post__messages {
   @include truncateTextEllipsis;
-  width: 50px;
+  width: 70px;
   flex: 0 0 auto;
+  padding: 0 1rem;
+  margin: 0;
+}
+
+@media only screen and (min-width: 641px) {
+  .community__content {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+  }
+}
+
+@media only screen and (min-width: 1008px) {
 }

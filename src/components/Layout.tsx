@@ -5,7 +5,7 @@ import { Color } from "../models/Color";
 
 interface Props extends React.PropsWithChildren {
   backgroundImage?: string;
-  color?: Color;
+  color?: Color | "transparent";
 }
 
 const Layout: FC<Props> = ({ children, backgroundImage, color }) => {

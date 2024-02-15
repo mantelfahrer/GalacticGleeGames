@@ -46,4 +46,8 @@
   &__overlay--green {
     background-color: $overlay-green;
   }
+
+  &__overlay--transparent {
+    background-color: transparent;
+  }
 }

@@ -5,7 +5,7 @@ import { Color } from "../models/Color";
 
 type Props = {
   backgroundImage?: string;
-  color?: Color;
+  color?: Color | "transparent";
 };
 
 const Background: FC<Props> = ({ backgroundImage, color }) => {
