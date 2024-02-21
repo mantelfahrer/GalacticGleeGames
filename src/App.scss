@@ -104,6 +104,11 @@ h6 {
   text-overflow: ellipsis;
 }
 
+@mixin innerShadow {
+  box-shadow: inset 6px 10px 12px rgba($yellow, 0.5),
+    inset -6px -10px 12px rgba(#000aff, 0.2);
+}
+
 // Styles
 a {
   text-decoration: none;

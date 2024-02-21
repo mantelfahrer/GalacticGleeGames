@@ -35,57 +35,28 @@
 
   &--blue-light {
     background-color: $blue-light;
-
-    &:hover {
-      background: linear-gradient(
-        0deg,
-        rgba($blue-light, 1) 0%,
-        rgba($blue-light, 0) 100%
-      );
-    }
   }
 
   &--blue-dark {
     background-color: $blue-dark;
-
-    &:hover {
-      background: linear-gradient(
-        0deg,
-        rgba($blue-dark, 1) 0%,
-        rgba($blue-dark, 0) 100%
-      );
-    }
   }
 
   &--pink {
     background-color: $pink;
-
-    &:hover {
-      background: linear-gradient(0deg, rgba($pink, 1) 0%, rgba($pink, 0) 100%);
-    }
   }
 
   &--yellow {
     background-color: $yellow;
-
-    &:hover {
-      background: linear-gradient(
-        0deg,
-        rgba($yellow, 1) 0%,
-        rgba($yellow, 0) 100%
-      );
-    }
   }
 
   &--green {
     background-color: $green;
+  }
 
-    &:hover {
-      background: linear-gradient(
-        0deg,
-        rgba($green, 1) 0%,
-        rgba($green, 0) 100%
-      );
-    }
+  &:hover {
+    background-color: $purple-black;
+    color: $yellow;
+    box-shadow: inset 3px 3px $yellow, inset -3px -3px $yellow,
+      inset 3px -3px $yellow, inset -3px 3px $yellow;
   }
 }

@@ -1,0 +1,16 @@
+@import '../App.scss';
+
+.about__text {
+    @include padding;
+    color: $yellow;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.employees {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+}

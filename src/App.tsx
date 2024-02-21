@@ -8,6 +8,7 @@ import GamesPage from "./routes/GamesPage";
 import Home from "./routes/Home";
 import NewsPage from "./routes/NewsPage";
 import Shop from "./routes/Shop";
+import AboutUs from "./routes/AboutUs";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/games" element={<GamesPage />} />
         <Route path="/community" element={<Community />} />
         <Route path="/shop" element={<Shop />} />
+        <Route path="/about" element={<AboutUs />} />
       </Routes>
       <Footer />
     </>
