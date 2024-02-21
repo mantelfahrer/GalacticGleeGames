@@ -28,7 +28,7 @@
   }
 
   &__overlay--blue-light {
-    background-color: $overlay-blue-light;
+    background-color: rgba($blue-light, 0.4);
   }
 
   &__overlay--blue-dark {
@@ -36,7 +36,7 @@
   }
 
   &__overlay--pink {
-    background-color: $overlay-pink;
+    background-color: rgba($pink, 0.3);
   }
 
   &__overlay--yellow {

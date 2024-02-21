@@ -1,26 +1,51 @@
-import React, { FC } from "react";
 import clsx from "clsx";
+import { FC } from "react";
+import { Link } from "react-router-dom";
+import { NewsArticle } from "../models/NewsArticle";
+import { truncateString } from "../utils/helpers";
+import { formatDate } from "../utils/formatDate";
 import "./NewsCard.scss";
-import { Color } from "../models/Color";
 
 type Props = {
-  headline: string;
-  text: string;
-  backgroundImage: string;
-  color: Color;
+  data: NewsArticle;
+  details?: boolean;
 };
 
-const NewsCard: FC<Props> = ({ headline, text, backgroundImage, color }) => {
+const Content: FC<Props> = ({ data, details }) => {
   return (
-    <div
-      className={clsx("newscard", `newscard--${color}`)}
-      style={{ backgroundImage: `url(${backgroundImage})` }}
-    >
+    <>
+      {details && <div className="newscard__image-spacer"></div>}
       <div className="newscard__overlay">
-        <h2 className="newscard__title">{headline}</h2>
-        <p className="newscard__text">{text}</p>
+        <h2 className="newscard__title">{data.headline}</h2>
+        <p className="newscard__date">{formatDate(data.createdAt)}</p>
+        <p className="newscard__text">
+          {details ? data.text : truncateString(data.text, 200, true)}
+        </p>
       </div>
-    </div>
+    </>
+  );
+};
+
+const NewsCard: FC<Props> = ({ data, details }) => {
+  if (details) {
+    return (
+      <div
+        className={clsx("newscard--big", `newscard--${data.color}`)}
+        style={{ backgroundImage: `url(${data.backgroundImage})` }}
+      >
+        <Content data={data} details />
+      </div>
+    );
+  }
+
+  return (
+    <Link
+      to={`/news/${data.id}`}
+      className={clsx("newscard", `newscard--${data.color}`)}
+      style={{ backgroundImage: `url(${data.backgroundImage})` }}
+    >
+      <Content data={data} />
+    </Link>
   );
 };
 

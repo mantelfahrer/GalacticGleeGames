@@ -24,7 +24,7 @@ const Background: FC<Props> = ({ backgroundImage, color }) => {
           color && `background__overlay--${color}`
         )}
       ></div>
-      <div className="background__gradient"></div>
+      {backgroundImage && color && <div className="background__gradient"></div>}
     </div>
   );
 };

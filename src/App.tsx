@@ -9,6 +9,7 @@ import Home from "./routes/Home";
 import NewsPage from "./routes/NewsPage";
 import Shop from "./routes/Shop";
 import AboutUs from "./routes/AboutUs";
+import NewsDetails from "./routes/NewsDetails";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/news/:id" element={<NewsDetails />} />
         <Route path="/news" element={<NewsPage />} />
         <Route path="/games/:gameName" element={<GameDetails />} />
         <Route path="/games" element={<GamesPage />} />
