@@ -1,0 +1,6 @@
+@import "../App.scss";
+
+.policy-temp {
+  @include padding;
+  color: $yellow;
+}

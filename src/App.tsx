@@ -10,6 +10,7 @@ import NewsPage from "./routes/NewsPage";
 import Shop from "./routes/Shop";
 import AboutUs from "./routes/AboutUs";
 import NewsDetails from "./routes/NewsDetails";
+import PolicyTemp from "./routes/PolicyTemp";
 
 function App() {
   return (
@@ -24,6 +25,10 @@ function App() {
         <Route path="/community" element={<Community />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/about" element={<AboutUs />} />
+        <Route path="/privacy" element={<PolicyTemp />} />
+        <Route path="/cookie" element={<PolicyTemp />} />
+        <Route path="/terms-of-service" element={<PolicyTemp />} />
+        <Route path="/user-data-protection" element={<PolicyTemp />} />
       </Routes>
       <Footer />
     </>
