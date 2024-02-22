@@ -18,7 +18,7 @@ const News: FC<Props> = ({ short }) => {
           if (short && index >= 3) {
             return undefined;
           } else {
-            return <NewsCard data={article} />;
+            return <NewsCard data={article} key={article.id} />;
           }
         })}
       </div>

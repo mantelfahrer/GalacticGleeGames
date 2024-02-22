@@ -1,16 +1,20 @@
-@import '../App.scss';
+@import "../App.scss";
+
+.about__introduction {
+  background: linear-gradient(180deg, rgba($pink, 1) 0%, rgba($pink, 0.1) 100%);
+}
 
 .about__text {
-    @include padding;
-    color: $yellow;
-    font-weight: 600;
-    font-size: 20px;
+  @include padding;
+  color: $yellow;
+  font-weight: 600;
+  font-size: 20px;
 }
 
 .employees {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 2rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
 }

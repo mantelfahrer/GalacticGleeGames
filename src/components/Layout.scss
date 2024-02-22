@@ -1,6 +1,11 @@
 .layout {
   width: 100%;
   max-width: 1600px;
+  min-height: calc(100vh - 400px);
   margin: 0 auto;
   position: relative;
+  
+  @media only screen and (min-width: 1008px) {
+    min-height: calc(100vh - 216px);
+  }
 }

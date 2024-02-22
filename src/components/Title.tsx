@@ -1,7 +1,19 @@
-import React, { FC } from "react";
+import React, { FC, PropsWithChildren } from "react";
+import clsx from "clsx";
 
-const Title: FC<React.PropsWithChildren> = ({ children }) => {
-  return <h1 className="title">{children}</h1>;
+type Props = {
+  className?: string;
+  formPadding?: boolean;
+} & PropsWithChildren;
+
+const Title: FC<Props> = ({ className, formPadding, children }) => {
+  return (
+    <h1
+      className={clsx("title", className, formPadding && "title--form-padding")}
+    >
+      {children}
+    </h1>
+  );
 };
 
 export default Title;
