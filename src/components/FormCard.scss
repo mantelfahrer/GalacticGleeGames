@@ -42,6 +42,17 @@
   }
 }
 
+.form-card__redirect-text {
+  color: $yellow;
+  font-size: 20px;
+}
+
+.form-card__redirect-link {
+  @include chromatic-aberration-text;
+  @include chromatic-aberration-text--hover;
+  margin-left: 1rem;
+}
+
 .form-card__field {
   display: flex;
   flex-direction: column;
@@ -80,7 +91,7 @@
   color: $yellow;
   margin: 1rem 0;
   align-self: center;
-  width: 220px;
+  min-width: 220px;
 
   &:hover {
     background-color: $purple-black;

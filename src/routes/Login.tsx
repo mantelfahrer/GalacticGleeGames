@@ -30,10 +30,15 @@ const Login: FC<Props> = (props: Props) => {
           ],
           formTitle: "Login",
           color: "green",
-          submitText: "Send",
+          submitText: "Login",
           onSubmit: onSubmit,
           onChange: onChange,
           image: character,
+          redirect: {
+            text: "Don't have an account, yet?",
+            linkText: "Sign up here",
+            to: "/signup"
+          },
           inputFields: [
             {
               label: "Email address",

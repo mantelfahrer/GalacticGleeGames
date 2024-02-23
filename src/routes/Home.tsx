@@ -18,7 +18,7 @@ const Home: FC = (props: Props) => {
         <div className="call-to-action">
           <p className="call-to-action__text">
             Join our <span className="bold">community</span> for a unique
-            interactive experience, such as
+            interactive experience, such as{" "}
             <span className="bold">quests</span>,{" "}
             <span className="bold">badges</span> and exclusive{" "}
             <span className="bold">rewards</span>.

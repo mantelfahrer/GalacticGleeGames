@@ -13,6 +13,7 @@ import NewsDetails from "./routes/NewsDetails";
 import PolicyTemp from "./routes/PolicyTemp";
 import Contact from "./routes/Contact";
 import Login from "./routes/Login";
+import Signup from "./routes/Signup";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/news/:id" element={<NewsDetails />} />
         <Route path="/news" element={<NewsPage />} />
         <Route path="/games/:gameName" element={<GameDetails />} />

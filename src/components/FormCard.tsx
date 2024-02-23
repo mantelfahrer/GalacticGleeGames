@@ -3,6 +3,7 @@ import { FC } from "react";
 import "./FormCard.scss";
 import Title from "./Title";
 import { TFormCard } from "../models/Form";
+import { Link } from "react-router-dom";
 
 type Props = {
   data: TFormCard;
@@ -16,6 +17,12 @@ const FormCard: FC<Props> = ({ data, className }) => {
       onSubmit={data.onSubmit}
     >
       {data.formTitle && <Title formPadding>{data.formTitle}</Title>}
+      {data.redirect && (
+        <p className="form-card__redirect-text">
+          {data.redirect.text}
+          <Link className="form-card__redirect-link" to={data.redirect.to}>{data.redirect.linkText}</Link>
+        </p>
+      )}
       {data.inputFields.map((field) => {
         return (
           <div className="form-card__field" key={field.inputAttributes.name}>

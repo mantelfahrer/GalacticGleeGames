@@ -8,6 +8,11 @@ export type TFormCard = {
   formTitle?: string;
   inputFields: InputField[];
   submitText: string;
+  redirect?: {
+    text: string;
+    linkText: string;
+    to: string;
+  };
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => any;
   onChange: React.ChangeEventHandler;
 };

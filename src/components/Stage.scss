@@ -28,6 +28,8 @@
   margin: 0;
   padding: o;
   font-size: 24px;
+  text-shadow: 0.5px 0.5px 0 $yellow, -0.5px 0.5px 0 $yellow,
+    -0.5px -0.5px 0 $yellow, 0.5px -0.5px 0 $yellow;
 }
 
 .stage__image {

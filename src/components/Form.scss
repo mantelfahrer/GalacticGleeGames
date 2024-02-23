@@ -57,6 +57,8 @@
   font-size: 20px;
   font-weight: 500;
   color: $yellow;
+  text-shadow: 1px 1px 0 $purple-black, -1px 1px 0 $purple-black,
+    -1px -1px 0 $purple-black, 1px -1px 0 $purple-black;
 }
 
 .form__image {
