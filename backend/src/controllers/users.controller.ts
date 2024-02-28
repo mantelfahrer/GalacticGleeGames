@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import { pool } from "../db/connect";
+import bcrypt from "bcrypt";
+const saltRounds = 9;
 
 /**
  *  @description Register user
@@ -12,9 +14,27 @@ export const registerUser = async (req: Request, res: Response) => {
     return res.status(401).json({ message: "All fields are required" });
   }
 
+  const encryptedPassword = await bcrypt.hash(password, saltRounds);
+
+  // check if username is already taken
+  let sqlCheckUsername = "SELECT username FROM users WHERE username = ?";
+  const [rowsCheckUsername] = await pool.query(sqlCheckUsername, [username]);
+  if (Array.isArray(rowsCheckUsername) && rowsCheckUsername.length) {
+    return res.status(401).json({ message: "username already taken" });
+  }
+
+  // check if email address is already taken
+  let sqlCheckEmail = "SELECT emailAddress FROM users WHERE emailAddress = ?";
+  const [rowsCheckEmail] = await pool.query(sqlCheckEmail, [emailAddress]);
+  if (Array.isArray(rowsCheckEmail) && rowsCheckEmail.length) {
+    return res
+      .status(401)
+      .json({ message: "email address already has an account" });
+  }
+
   let sql =
     "INSERT INTO users (username, name, emailAddress, password) VALUES (?, ?, ?, ?)";
-  await pool.query(sql, [username, name, emailAddress, password]);
+  await pool.query(sql, [username, name, emailAddress, encryptedPassword]);
 
   return res.status(201).json({ message: "User has been registered" });
 };
@@ -37,7 +57,8 @@ export const getAllUsers = async (req: Request, res: Response) => {
  * @returns user
  */
 async function getUser(userID: string) {
-  let sql = "SELECT userID, username, name, emailAddress FROM users WHERE userID = ?";
+  let sql =
+    "SELECT userID, username, name, emailAddress FROM users WHERE userID = ?";
   const [rows] = await pool.query(sql, [userID]);
   if (Array.isArray(rows)) {
     return rows[0];
