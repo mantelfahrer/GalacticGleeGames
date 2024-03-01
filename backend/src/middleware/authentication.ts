@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
-import { User } from "../models/User";
+import { IUser } from "../models/IUser";
 
-export function generateAccessToken(user: User) {
+export function generateAccessToken(user: IUser) {
   const payload = {
     userID: user.userID,
     username: user.username,
