@@ -1,10 +1,9 @@
 import bcrypt from "bcrypt";
-import { Request, Response } from "express";
-import { generateAccessToken } from "../middleware/authentication";
-import { IUser } from "../models/IUser";
-import { User } from "../db/connect";
 import crypto from "crypto";
+import { Request, Response } from "express";
 import { Op } from "sequelize";
+import { generateAccessToken } from "../middleware/authentication";
+import { User } from "../db/initialize";
 
 const saltRounds = 9;
 
