@@ -24,7 +24,7 @@ export const createModelPost = (sequelize: Sequelize) => {
       },
     },
     content: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
   });

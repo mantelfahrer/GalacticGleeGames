@@ -1,3 +1,4 @@
+import crypto from "crypto";
 import { Request, Response } from "express";
 import { Post } from "../db/initialize";
 
@@ -8,7 +9,7 @@ import { Post } from "../db/initialize";
 export const createPost = async (req: Request, res: Response) => {
   const { content, user, threadID } = req.body;
 
-  if (!content || !user|| !threadID) {
+  if (!content || !user || !threadID) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
@@ -32,7 +33,12 @@ export const createPost = async (req: Request, res: Response) => {
  *  @return posts
  */
 export const getAllPostsForThread = async (threadID: string) => {
-  const posts = await Post.findAll({ where: { threadID: threadID } });
+  const posts = await Post.findAll({
+    where: { threadID: threadID },
+    order: [
+      ["createdAt", "ASC"],
+    ],
+  });
 
   return posts;
 };
@@ -44,11 +50,7 @@ export const getAllPostsForThread = async (threadID: string) => {
 export const getSinglePost = async (req: Request, res: Response) => {
   const { postID } = req.params;
 
-  const post = await Post.findOne({
-    where: {
-      postID: postID,
-    },
-  });
+  const post = await Post.findByPk(postID);
 
   if (!post) {
     return res.status(404).json({ message: "Post not found" });
@@ -69,28 +71,23 @@ export const updatePost = async (req: Request, res: Response) => {
     return res.status(400).json({ message: "All fields are required" });
   }
 
-  const post: any = await Post.findOne({
-    where: {
-      postID: postID,
-    },
-  });
+  const post: any = await Post.findByPk(postID);
 
   if (!post) {
     return res.status(404).json({ message: "Post not found" });
   }
 
   if (post.userID !== user.userID) {
-    return res.status(403);
+    return res.sendStatus(403);
   }
 
-  const result = Post.update(
-    { content: content },
-    {
-      where: {
-        postID: postID,
-      },
-    }
-  );
+  if (post.content === content) {
+    return res.status(400).json({ message: "Fields are unchanged" });
+  }
+
+  post.content = content;
+
+  const result = await post.save();
 
   if (!result) {
     return res.status(500).json({ message: "Post could not be updated" });
@@ -108,21 +105,17 @@ export const deletePost = async (req: Request, res: Response) => {
   const { user } = req.body;
 
   if (!user) {
-    return res.status(401);
+    return res.sendStatus(401);
   }
 
-  const post: any = await Post.findOne({
-    where: {
-      postID: postID,
-    },
-  });
+  const post: any = await Post.findByPk(postID);
 
   if (!post) {
     return res.status(404).json({ message: "Post not found" });
   }
 
   if (post.userID !== user.userID) {
-    return res.status(403);
+    return res.sendStatus(403);
   }
 
   const result = await Post.destroy({
@@ -135,5 +128,5 @@ export const deletePost = async (req: Request, res: Response) => {
     return res.status(500).json({ message: "Post could not be deleted" });
   }
 
-  return res.status(200);
+  return res.sendStatus(200);
 };

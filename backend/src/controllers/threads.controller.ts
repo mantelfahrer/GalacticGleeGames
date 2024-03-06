@@ -1,3 +1,4 @@
+import crypto from "crypto";
 import { Request, Response } from "express";
 import { Thread } from "../db/initialize";
 import { getAllPostsForThread } from "./posts.controller";
@@ -44,17 +45,13 @@ export const getAllThreads = async (req: Request, res: Response) => {
 export const getSingleThread = async (req: Request, res: Response) => {
   const { threadID } = req.params;
 
-  const thread = await Thread.findOne({
-    where: {
-      threadID: threadID,
-    },
-  });
+  const thread = await Thread.findByPk(threadID);
 
   if (!thread) {
     return res.status(404).json({ message: "Thread not found" });
   }
 
-  const posts = getAllPostsForThread(threadID);
+  const posts = await getAllPostsForThread(threadID);
 
   return res.status(200).json({ thread: thread, posts: posts });
 };
@@ -71,28 +68,23 @@ export const updateThread = async (req: Request, res: Response) => {
     return res.status(400).json({ message: "All fields are required" });
   }
 
-  const thread: any = await Thread.findOne({
-    where: {
-      threadID: threadID,
-    },
-  });
+  const thread: any = await Thread.findByPk(threadID);
 
   if (!thread) {
     return res.status(404).json({ message: "Thread not found" });
   }
 
   if (thread.userID !== user.userID) {
-    return res.status(403);
+    return res.sendStatus(403);
   }
 
-  const result = Thread.update(
-    { title: title },
-    {
-      where: {
-        threadID: threadID,
-      },
-    }
-  );
+  if (thread.title === title) {
+    return res.status(400).json({ message: "Fields are unchanged" });
+  }
+
+  thread.title = title;
+
+  const result = await thread.save();
 
   if (!result) {
     return res.status(500).json({ message: "Thread could not be updated" });
@@ -110,21 +102,17 @@ export const deleteThread = async (req: Request, res: Response) => {
   const { user } = req.body;
 
   if (!user) {
-    return res.status(401);
+    return res.sendStatus(401);
   }
 
-  const thread: any = await Thread.findOne({
-    where: {
-      threadID: threadID,
-    },
-  });
+  const thread: any = await Thread.findByPk(threadID);
 
   if (!thread) {
     return res.status(404).json({ message: "Thread not found" });
   }
 
   if (thread.userID !== user.userID) {
-    return res.status(403);
+    return res.sendStatus(403);
   }
 
   const result = await Thread.destroy({
@@ -137,5 +125,5 @@ export const deleteThread = async (req: Request, res: Response) => {
     return res.status(500).json({ message: "Thread could not be deleted" });
   }
 
-  return res.status(200);
+  return res.sendStatus(200);
 };

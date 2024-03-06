@@ -45,7 +45,7 @@ export function authenticateToken(
   const token = authHeader && authHeader.split(" ")[1];
 
   if (!token) {
-    return res.sendStatus(401);
+    return res.status(401).json({message: "Not logged in"});
   }
 
   const result = verifyAccessToken(token);
