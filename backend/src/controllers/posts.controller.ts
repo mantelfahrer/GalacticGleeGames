@@ -6,9 +6,9 @@ import { Post } from "../db/initialize";
  *  @route POST /posts
  */
 export const createPost = async (req: Request, res: Response) => {
-  const { content, userID, threadID } = req.body;
+  const { content, user, threadID } = req.body;
 
-  if (!content || !userID || !threadID) {
+  if (!content || !user|| !threadID) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
@@ -16,7 +16,7 @@ export const createPost = async (req: Request, res: Response) => {
 
   const post = await Post.create({
     postID: uuid,
-    userID: userID,
+    userID: user.userID,
     threadID: threadID,
     content: content,
   });
@@ -63,9 +63,9 @@ export const getSinglePost = async (req: Request, res: Response) => {
  */
 export const updatePost = async (req: Request, res: Response) => {
   const { postID } = req.params;
-  const { content, userID } = req.body;
+  const { content, user } = req.body;
 
-  if (!content || !userID) {
+  if (!content || !user) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
@@ -79,7 +79,7 @@ export const updatePost = async (req: Request, res: Response) => {
     return res.status(404).json({ message: "Post not found" });
   }
 
-  if (post.userID !== userID) {
+  if (post.userID !== user.userID) {
     return res.status(403);
   }
 
@@ -105,10 +105,10 @@ export const updatePost = async (req: Request, res: Response) => {
  */
 export const deletePost = async (req: Request, res: Response) => {
   const { postID } = req.params;
-  const { userID } = req.body;
+  const { user } = req.body;
 
-  if (!userID) {
-    return res.status(401).json({ message: "userID must be provided" });
+  if (!user) {
+    return res.status(401);
   }
 
   const post: any = await Post.findOne({
@@ -121,7 +121,7 @@ export const deletePost = async (req: Request, res: Response) => {
     return res.status(404).json({ message: "Post not found" });
   }
 
-  if (post.userID !== userID) {
+  if (post.userID !== user.userID) {
     return res.status(403);
   }
 

@@ -54,5 +54,7 @@ export function authenticateToken(
     return res.status(403).json({ error: result.error });
   }
 
+  req.body.user = result.data
+
   next();
 }

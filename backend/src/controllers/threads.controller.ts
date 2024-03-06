@@ -7,9 +7,9 @@ import { getAllPostsForThread } from "./posts.controller";
  *  @route POST /threads
  */
 export const createThread = async (req: Request, res: Response) => {
-  const { title, userID } = req.body;
+  const { title, user } = req.body;
 
-  if (!title || !userID) {
+  if (!title || !user) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
@@ -17,7 +17,7 @@ export const createThread = async (req: Request, res: Response) => {
 
   const thread = await Thread.create({
     threadID: uuid,
-    userID: userID,
+    userID: user.userID,
     title: title,
   });
   if (!thread) {
@@ -65,9 +65,9 @@ export const getSingleThread = async (req: Request, res: Response) => {
  */
 export const updateThread = async (req: Request, res: Response) => {
   const { threadID } = req.params;
-  const { title, userID } = req.body;
+  const { title, user } = req.body;
 
-  if (!title || !userID) {
+  if (!title || !user) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
@@ -81,7 +81,7 @@ export const updateThread = async (req: Request, res: Response) => {
     return res.status(404).json({ message: "Thread not found" });
   }
 
-  if (thread.userID !== userID) {
+  if (thread.userID !== user.userID) {
     return res.status(403);
   }
 
@@ -107,10 +107,10 @@ export const updateThread = async (req: Request, res: Response) => {
  */
 export const deleteThread = async (req: Request, res: Response) => {
   const { threadID } = req.params;
-  const { userID } = req.body;
+  const { user } = req.body;
 
-  if (!userID) {
-    return res.status(401).json({ message: "userID must be provided" });
+  if (!user) {
+    return res.status(401);
   }
 
   const thread: any = await Thread.findOne({
@@ -123,7 +123,7 @@ export const deleteThread = async (req: Request, res: Response) => {
     return res.status(404).json({ message: "Thread not found" });
   }
 
-  if (thread.userID !== userID) {
+  if (thread.userID !== user.userID) {
     return res.status(403);
   }
 
