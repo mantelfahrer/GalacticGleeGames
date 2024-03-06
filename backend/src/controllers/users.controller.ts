@@ -15,7 +15,7 @@ export const registerUser = async (req: Request, res: Response) => {
   const { username, name, emailAddress, password } = req.body;
 
   if (!username || !name || !emailAddress || !password) {
-    return res.status(401).json({ message: "All fields are required" });
+    return res.status(400).json({ message: "All fields are required" });
   }
 
   const encryptedPassword = await bcrypt.hash(password, saltRounds);
@@ -53,8 +53,6 @@ export const getAllUsers = async (req: Request, res: Response) => {
     attributes: ["userID", "username"],
   });
 
-  console.log("ALL USERS: " + users);
-
   return res.status(200).json(users);
 };
 
@@ -73,7 +71,7 @@ export const getSingleUser = async (req: Request, res: Response) => {
   });
 
   if (!user) {
-    return res.status(401).json({ message: "User not found" });
+    return res.status(404).json({ message: "User not found" });
   }
 
   return res.status(200).json(user);
@@ -88,7 +86,7 @@ export const loginUser = async (req: Request, res: Response) => {
   // let result: User;
 
   if (!username || !password) {
-    res.status(401).json({
+    res.status(400).json({
       message: "Username and password must be provided",
     });
   }
@@ -100,7 +98,7 @@ export const loginUser = async (req: Request, res: Response) => {
   });
 
   if (!user) {
-    return res.status(401).json({
+    return res.status(404).json({
       message: "User not found",
     });
   }
