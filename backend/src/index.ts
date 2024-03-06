@@ -1,6 +1,8 @@
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
+import postsRoute from "./routes/posts.routes";
+import threadsRoute from "./routes/threads.routes";
 import usersRoute from "./routes/users.routes";
 dotenv.config();
 
@@ -18,6 +20,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // api routes
 app.use("/users", usersRoute);
+app.use("/threads", threadsRoute);
+app.use("/posts", postsRoute);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

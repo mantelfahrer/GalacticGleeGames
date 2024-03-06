@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { Thread } from "../db/initialize";
+import { getAllPostsForThread } from "./posts.controller";
 
 /**
  *  @description Create thread
@@ -53,7 +54,9 @@ export const getSingleThread = async (req: Request, res: Response) => {
     return res.status(404).json({ message: "Thread not found" });
   }
 
-  return res.status(200).json(thread);
+  const posts = getAllPostsForThread(threadID);
+
+  return res.status(200).json({ thread: thread, posts: posts });
 };
 
 /**
@@ -62,13 +65,27 @@ export const getSingleThread = async (req: Request, res: Response) => {
  */
 export const updateThread = async (req: Request, res: Response) => {
   const { threadID } = req.params;
-  const { title } = req.body;
+  const { title, userID } = req.body;
 
-  if (!title) {
-    return res.status(400).json({ message: "Title must be provided" });
+  if (!title || !userID) {
+    return res.status(400).json({ message: "All fields are required" });
   }
 
-  const thread = Thread.update(
+  const thread: any = await Thread.findOne({
+    where: {
+      threadID: threadID,
+    },
+  });
+
+  if (!thread) {
+    return res.status(404).json({ message: "Thread not found" });
+  }
+
+  if (thread.userID !== userID) {
+    return res.status(403);
+  }
+
+  const result = Thread.update(
     { title: title },
     {
       where: {
@@ -77,11 +94,11 @@ export const updateThread = async (req: Request, res: Response) => {
     }
   );
 
-  if (!thread) {
-    return res.status(404).json({ message: "Thread not found" });
+  if (!result) {
+    return res.status(500).json({ message: "Thread could not be updated" });
   }
 
-  return res.status(200).json(thread);
+  return res.status(200).json(result);
 };
 
 /**
@@ -117,7 +134,7 @@ export const deleteThread = async (req: Request, res: Response) => {
   });
 
   if (result < 1) {
-    return res.status(404).json({ message: "Thread not found" });
+    return res.status(500).json({ message: "Thread could not be deleted" });
   }
 
   return res.status(200);

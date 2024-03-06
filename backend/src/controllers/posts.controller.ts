@@ -28,13 +28,13 @@ export const createPost = async (req: Request, res: Response) => {
 };
 
 /**
- *  @description Get all posts
- *  @route GET /posts
+ *  @description Get all posts for thread
+ *  @return posts
  */
-export const getAllPosts = async (req: Request, res: Response) => {
-  const posts = await Post.findAll();
+export const getAllPostsForThread = async (threadID: string) => {
+  const posts = await Post.findAll({ where: { threadID: threadID } });
 
-  return res.status(200).json(posts);
+  return posts;
 };
 
 /**
@@ -63,13 +63,27 @@ export const getSinglePost = async (req: Request, res: Response) => {
  */
 export const updatePost = async (req: Request, res: Response) => {
   const { postID } = req.params;
-  const { content } = req.body;
+  const { content, userID } = req.body;
 
-  if (!content) {
-    return res.status(400).json({ message: "Content must be provided" });
+  if (!content || !userID) {
+    return res.status(400).json({ message: "All fields are required" });
   }
 
-  const post = Post.update(
+  const post: any = await Post.findOne({
+    where: {
+      postID: postID,
+    },
+  });
+
+  if (!post) {
+    return res.status(404).json({ message: "Post not found" });
+  }
+
+  if (post.userID !== userID) {
+    return res.status(403);
+  }
+
+  const result = Post.update(
     { content: content },
     {
       where: {
@@ -78,11 +92,11 @@ export const updatePost = async (req: Request, res: Response) => {
     }
   );
 
-  if (!post) {
-    return res.status(404).json({ message: "Post not found" });
+  if (!result) {
+    return res.status(500).json({ message: "Post could not be updated" });
   }
 
-  return res.status(200).json(post);
+  return res.status(200).json(result);
 };
 
 /**
@@ -118,7 +132,7 @@ export const deletePost = async (req: Request, res: Response) => {
   });
 
   if (result < 1) {
-    return res.status(404).json({ message: "Post not found" });
+    return res.status(500).json({ message: "Post could not be deleted" });
   }
 
   return res.status(200);

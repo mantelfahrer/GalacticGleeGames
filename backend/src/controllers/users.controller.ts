@@ -22,7 +22,7 @@ export const registerUser = async (req: Request, res: Response) => {
   const uuid = crypto.randomUUID();
 
   // check if username or email address is already taken
-  const [user, created] = await User.findOrCreate({
+  const [created] = await User.findOrCreate({
     where: {
       [Op.or]: [{ username: username }, { emailAddress: emailAddress }],
     },
