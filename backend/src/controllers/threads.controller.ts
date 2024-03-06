@@ -14,7 +14,6 @@ export const createThread = async (req: Request, res: Response) => {
 
   const uuid = crypto.randomUUID();
 
-  // check if username or email address is already taken
   const thread = await Thread.create({
     threadID: uuid,
     userID: userID,
@@ -66,7 +65,7 @@ export const updateThread = async (req: Request, res: Response) => {
   const { title } = req.body;
 
   if (!title) {
-    return res.status(400).json({ message: "All fields are required" });
+    return res.status(400).json({ message: "Title must be provided" });
   }
 
   const thread = Thread.update(
