@@ -1,29 +1,29 @@
 import { DataTypes, Sequelize } from "sequelize";
 
-export const createModelUser = (sequelize: Sequelize) => {
-  return sequelize.define("User", {
-    userID: {
+export const createModelUserQuest = (sequelize: Sequelize) => {
+  return sequelize.define("UserQuest", {
+    userQuestID: {
       type: DataTypes.STRING,
       allowNull: false,
       primaryKey: true,
     },
-    username: {
+    userID: {
       type: DataTypes.STRING,
       allowNull: false,
+      references: {
+        model: "Users",
+        key: "userID",
+      },
     },
-    name: {
+    questID: {
       type: DataTypes.STRING,
       allowNull: false,
+      references: {
+        model: "Quests",
+        key: "questID",
+      },
     },
-    emailAddress: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    role: {
+    status: {
       type: DataTypes.STRING,
       allowNull: false,
     },

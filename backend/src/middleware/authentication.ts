@@ -6,6 +6,7 @@ export function generateAccessToken(user: IUser) {
   const payload = {
     userID: user.userID,
     username: user.username,
+    role: user.role,
   };
 
   const secret = process.env.JWT_SECRET_KEY || "secret-key";
@@ -45,7 +46,7 @@ export function authenticateToken(
   const token = authHeader && authHeader.split(" ")[1];
 
   if (!token) {
-    return res.status(401).json({message: "Not logged in"});
+    return res.status(401).json({ message: "Not logged in" });
   }
 
   const result = verifyAccessToken(token);
@@ -54,7 +55,7 @@ export function authenticateToken(
     return res.status(403).json({ error: result.error });
   }
 
-  req.body.user = result.data
+  req.body.user = result.data;
 
   next();
 }

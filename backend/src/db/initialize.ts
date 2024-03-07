@@ -1,8 +1,13 @@
 import dotenv from "dotenv";
 import { Sequelize } from "sequelize";
-import { createModelUser } from "./users";
-import { createModelThread } from "./threads";
+import { createModelBadge } from "./badges";
 import { createModelPost } from "./posts";
+import { createModelQuest } from "./quests";
+import { createModelThread } from "./threads";
+import { createModelUserBadge } from "./userBadges";
+import { createModelUserQuest } from "./userQuests";
+import { createModelUser } from "./users";
+import { createFixtures } from "./fixtures";
 dotenv.config();
 
 export const sequelize = new Sequelize(
@@ -19,6 +24,10 @@ export const sequelize = new Sequelize(
 export const User = createModelUser(sequelize);
 export const Thread = createModelThread(sequelize);
 export const Post = createModelPost(sequelize);
+export const Quest = createModelQuest(sequelize);
+export const Badge = createModelBadge(sequelize);
+export const UserQuest = createModelUserQuest(sequelize);
+export const UserBadge = createModelUserBadge(sequelize);
 
 // ASSOCIATIONS
 // user 1:n thread
@@ -45,8 +54,25 @@ Post.belongsTo(User, {
   foreignKey: "threadID",
 });
 
-// sync
+// quest 1:1 badges
+Quest.hasOne(Badge, {
+  foreignKey: "questID",
+});
+Badge.belongsTo(Quest, {
+  foreignKey: "questID",
+});
+
+// user n:m quest through userQuests
+User.belongsToMany(Quest, { through: UserQuest, uniqueKey: "userQuestID" });
+Quest.belongsToMany(User, { through: UserQuest, uniqueKey: "userQuestID" });
+
+// user n:m badge through userBadges
+User.belongsToMany(Badge, { through: UserBadge, uniqueKey: "userBadgeID" });
+Badge.belongsToMany(User, { through: UserBadge, uniqueKey: "userBadgeID" });
+
+// initialize database
 async function sync(): Promise<void> {
   await sequelize.sync();
+  await createFixtures();
 }
 sync().catch(console.error);

@@ -1,11 +1,11 @@
 import bcrypt from "bcrypt";
 import crypto from "crypto";
+import dotenv from "dotenv";
 import { Request, Response } from "express";
 import { Op } from "sequelize";
-import { generateAccessToken } from "../middleware/authentication";
 import { User } from "../db/initialize";
-
-const saltRounds = 9;
+import { generateAccessToken } from "../middleware/authentication";
+dotenv.config();
 
 /**
  *  @description Register user
@@ -18,11 +18,11 @@ export const registerUser = async (req: Request, res: Response) => {
     return res.status(400).json({ message: "All fields are required" });
   }
 
-  const encryptedPassword = await bcrypt.hash(password, saltRounds);
+  const encryptedPassword = await bcrypt.hash(password, 10);
   const uuid = crypto.randomUUID();
 
   // check if username or email address is already taken
-  const [created] = await User.findOrCreate({
+  const [user, created] = await User.findOrCreate({
     where: {
       [Op.or]: [{ username: username }, { emailAddress: emailAddress }],
     },
@@ -32,6 +32,7 @@ export const registerUser = async (req: Request, res: Response) => {
       name: name,
       emailAddress: emailAddress,
       password: encryptedPassword,
+      role: "USER",
     },
   });
   console.log("User created: " + created);
