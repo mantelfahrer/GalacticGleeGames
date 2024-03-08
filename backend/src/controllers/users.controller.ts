@@ -50,6 +50,10 @@ export const registerUser = async (req: Request, res: Response) => {
  * @route GET /users
  */
 export const getAllUsers = async (req: Request, res: Response) => {
+  if (req.body.user.role !== "ADMIN") {
+    return res.sendStatus(403);
+  }
+
   const users = await User.findAll({
     attributes: ["userID", "username"],
   });
