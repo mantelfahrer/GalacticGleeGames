@@ -15,7 +15,6 @@ export const sequelize = new Sequelize(
   {
     host: process.env.MYSQL_HOST,
     dialect: "mysql",
-    logging: false,
   }
 );
 
@@ -52,8 +51,8 @@ Post.belongsTo(User, {
 });
 
 // user n:m quest through userQuests
-User.belongsToMany(Quest, { through: UserQuest, uniqueKey: "userQuestID" });
-Quest.belongsToMany(User, { through: UserQuest, uniqueKey: "userQuestID" });
+User.belongsToMany(Quest, { through: UserQuest, uniqueKey: "userQuestID", foreignKey: "userID", otherKey: "questID" });
+Quest.belongsToMany(User, { through: UserQuest, uniqueKey: "userQuestID", foreignKey: "questID", otherKey: "userID" });
 
 // initialize database
 async function sync(): Promise<void> {

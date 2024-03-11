@@ -3,8 +3,9 @@ import crypto from "crypto";
 import dotenv from "dotenv";
 import { Request, Response } from "express";
 import { Op } from "sequelize";
-import { User } from "../db/initialize";
+import { Quest, User } from "../db/initialize";
 import { generateAccessToken } from "../middleware/authentication";
+import { createUserQuest } from "./userQuests.controller";
 dotenv.config();
 
 /**
@@ -41,7 +42,28 @@ export const registerUser = async (req: Request, res: Response) => {
       .json({ message: "Username or email address already taken" });
   }
 
-  return res.status(201).json({ message: "User has been registered" });
+  // get all recent quests
+  const allQuests: any[] = await Quest.findAll();
+  if (!allQuests) {
+    return res
+      .status(500)
+      .json({ message: "Quests for user could not be created." });
+  }
+
+  // create userQuests
+  allQuests.forEach(async (quest) => {
+    await createUserQuest(uuid, quest.questID);
+  });
+
+  const createdUser = await User.findByPk(uuid, {
+    attributes: { exclude: ["password", "emailAddress", "role"] },
+    include: Quest,
+  });
+
+  return res.status(201).json({
+    message: "User has been registered",
+    user: createdUser,
+  });
 };
 
 /**
@@ -67,16 +89,16 @@ export const getAllUsers = async (req: Request, res: Response) => {
 export const getSingleUser = async (req: Request, res: Response) => {
   const { userID } = req.params;
 
-  const user = await User.findOne({
-    where: {
-      userID: userID,
-    },
-    attributes: { exclude: ["password", "emailAddress"] },
+  const user = await User.findByPk(userID, {
+    attributes: { exclude: ["password", "emailAddress", "role"] },
+    include: Quest,
   });
 
   if (!user) {
     return res.status(404).json({ message: "User not found" });
   }
+
+  console.log("user: " + JSON.stringify(user, null, 2))
 
   return res.status(200).json(user);
 };

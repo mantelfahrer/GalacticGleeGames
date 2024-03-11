@@ -42,6 +42,7 @@ export const getAllQuests = async (req: Request, res: Response) => {
   return res.status(200).json(quests);
 };
 
+
 /**
  *  @description Get single quest
  *  @route GET /quests/:questID

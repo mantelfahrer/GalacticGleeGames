@@ -1,83 +1,46 @@
 import crypto from "crypto";
 import { Request, Response } from "express";
-import { UserQuest } from "../db/initialize";
+import { Quest, UserQuest } from "../db/initialize";
 
 /**
  *  @description Create userQuest
- *  @route POST /quests/userQuest
+ *  @returns UserQuest
  */
-export const createUserQuest = async (req: Request, res: Response) => {
-  if (req.body.user.role !== "ADMIN") {
-    return res.sendStatus(403);
-  }
-
-  const { userID, questID, status } = req.body;
-
-  if (!userID || !questID || !status) {
-    return res.status(400).json({ message: "All fields are required" });
-  }
-
+export const createUserQuest = async (userID: string, questID: string) => {
   const uuid = crypto.randomUUID();
 
-  const userQuest = await UserQuest.create({
-    userQuestID: uuid,
-    userID: userID,
-    questID: questID,
-    status: status,
-  });
-
-  if (!userQuest) {
-    return res.status(500).json({ message: "UserQuest could not be created" });
-  }
-
-  return res
-    .status(201)
-    .json({ message: "UserQuest was created", data: userQuest });
-};
-
-/**
- *  @description Get all quests for user
- *  @route GET /quests/user/:userID
- */
-export const getAllQuestsForUser = async (req: Request, res: Response) => {
-  const { userID } = req.body;
-
-  const userQuests = await UserQuest.findAll({
+  const [userQuest, created] = await UserQuest.findOrCreate({
     where: {
+      userQuestID: uuid,
+    },
+    defaults: {
+      userQuestID: uuid,
       userID: userID,
+      questID: questID,
+      status: "open",
     },
   });
 
-  return res.status(200).json(userQuests);
+  return { userQuest, created };
 };
 
 /**
  *  @description Get single userQuest
- *  @route GET /quests/userQuest/:userQuestID
+ *  @returns UserQuest
  */
-export const getSingleUserQuest = async (req: Request, res: Response) => {
-  const { userQuestID } = req.params;
-
+export const getSingleUserQuest = async (userQuestID: string) => {
   const userQuest = await UserQuest.findByPk(userQuestID);
 
-  if (!userQuest) {
-    return res.status(404).json({ message: "UserQuest not found" });
-  }
-
-  return res.status(200).json(userQuest);
+  return userQuest;
 };
 
 /**
  * @description Update userQuest
  * @route PUT /quests/userQuest/:userQuestID
  */
-export const updateQuest = async (req: Request, res: Response) => {
-  if (req.body.user.role !== "ADMIN") {
-    return res.sendStatus(403);
-  }
-
+export const updateUserQuest = async (req: Request, res: Response) => {
   const { userQuestID } = req.params;
-  const { status } = req.body;
+  const { status, user } = req.body;
 
   if (!status) {
     return res.status(400).json({ message: "All fields are required" });
@@ -87,6 +50,10 @@ export const updateQuest = async (req: Request, res: Response) => {
 
   if (!userQuest) {
     return res.status(404).json({ message: "UserQuest not found" });
+  }
+
+  if (req.body.user.userID !== userQuest.userID) {
+    return res.sendStatus(403);
   }
 
   if (userQuest.status === status) {
@@ -105,31 +72,32 @@ export const updateQuest = async (req: Request, res: Response) => {
 };
 
 /**
- * @description Delete userQuest
- * @route DELETE /quests/userQuest/:userQuestID
+ * @description Update userQuests for user
+ * @route PUT /quests/user/:userID
  */
-export const deleteUserQuest = async (req: Request, res: Response) => {
+export const updateUserQuestsForUser = async (req: Request, res: Response) => {
   if (req.body.user.role !== "ADMIN") {
     return res.sendStatus(403);
   }
 
-  const { userQuestID } = req.params;
+  const { userID } = req.params;
 
-  const userQuest: any = await UserQuest.findByPk(userQuestID);
-
-  if (!userQuest) {
-    return res.status(404).json({ message: "UserQuest not found" });
+  if (!userID) {
+    return res.status(400).json({ message: "All fields are required" });
   }
 
-  const result = await UserQuest.destroy({
-    where: {
-      userQuestID: userQuestID,
-    },
+  // get all recent quests
+  const quests: any[] = await Quest.findAll();
+  if (!quests) {
+    return res
+      .status(500)
+      .json({ message: "Quests for user could not be created." });
+  }
+
+  // create userQuests
+  quests.forEach(async (quest) => {
+    await createUserQuest(userID, quest.questID);
   });
 
-  if (result < 1) {
-    return res.status(500).json({ message: "UserQuest could not be deleted" });
-  }
-
-  return res.sendStatus(200);
+  return res.status(200).json({ message: "UserQuests for user updated." });
 };
