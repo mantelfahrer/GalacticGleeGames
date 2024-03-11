@@ -1,6 +1,7 @@
 import crypto from "crypto";
 import { Request, Response } from "express";
 import { Quest, UserQuest } from "../db/initialize";
+import { Op } from "sequelize";
 
 /**
  *  @description Create userQuest
@@ -11,7 +12,10 @@ export const createUserQuest = async (userID: string, questID: string) => {
 
   const [userQuest, created] = await UserQuest.findOrCreate({
     where: {
-      userQuestID: uuid,
+      [Op.or]: [
+        { userQuestID: uuid },
+        { [Op.and]: [{ userID: userID }, { questID: questID }] },
+      ],
     },
     defaults: {
       userQuestID: uuid,
