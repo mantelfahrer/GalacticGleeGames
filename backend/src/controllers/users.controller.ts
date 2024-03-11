@@ -35,7 +35,6 @@ export const registerUser = async (req: Request, res: Response) => {
       role: "USER",
     },
   });
-  console.log("User created: " + created);
   if (!created) {
     return res
       .status(401)
