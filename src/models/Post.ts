@@ -1,6 +1,10 @@
+import { User } from "./User";
+
 export type Post = {
-    id: number;
-    username: string;
-    topic: string;
-    messages: number;
+    postID: number;
+    threadID: string;
+    User: User;
+    content: string;
+    createdAt: Date;
+    updatedAt: Date;
 }

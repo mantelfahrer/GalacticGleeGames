@@ -19,6 +19,7 @@
   padding-bottom: 3rem;
   width: 100%;
   max-width: 641px;
+  min-height: 240px;
   background-color: $overlay-pink;
   border-radius: 10px;
 
@@ -33,6 +34,17 @@
   width: 100%;
   font-size: 28px;
   color: $yellow;
+}
+
+.forum__spinner-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.forum__spinner {
+  display: inline-flex;
+  margin: 0 auto;
 }
 
 .post {

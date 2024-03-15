@@ -5,6 +5,8 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import ScrollToTop from "./utils/ScrollToTop";
+import { Provider } from "react-redux";
+import { store } from "./state/store";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -12,8 +14,10 @@ const root = ReactDOM.createRoot(
 root.render(
   <BrowserRouter>
     <React.StrictMode>
-      <ScrollToTop />
-      <App />
+      <Provider store={store}>
+        <ScrollToTop />
+        <App />
+      </Provider>
     </React.StrictMode>
   </BrowserRouter>
 );

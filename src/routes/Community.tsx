@@ -4,12 +4,16 @@ import SearchField from "../components/SearchField";
 import Title from "../components/Title";
 import Layout from "../components/Layout";
 import backgroundImage from "../images/BackgroundImages/background-5.png";
-import { forumPosts, forumTopics } from "../data/forum";
+import { forumTopics } from "../data/forum";
+import SpinnerLoader from "../components/SpinnerLoader";
+import { useGetThreadsQuery } from "../state/slices/apiSlice";
 
 type Props = {};
 
 const Community: FC<Props> = (props: Props) => {
   const [searchValue, setSearchValue] = React.useState<string>("");
+
+  const result = useGetThreadsQuery();
 
   return (
     <Layout backgroundImage={backgroundImage} color="transparent">
@@ -19,15 +23,21 @@ const Community: FC<Props> = (props: Props) => {
         <div className="community__content">
           <div className="forum">
             <h2 className="forum__title">Latest Posts</h2>
-            {forumPosts.map((post) => {
-              return (
-                <div className="post" key={post.id}>
-                  <p className="post__messages">{post.messages}</p>
-                  <p className="post__username">{post.username}</p>
-                  <p className="post__topic">{post.topic}</p>
-                </div>
-              );
-            })}
+            {(result.isLoading || result.isFetching) && (
+              <div className="forum__spinner-wrapper">
+                <SpinnerLoader className="forum__spinner" />
+              </div>
+            )}
+            {result.isSuccess &&
+              result.data.map((thread) => {
+                return (
+                  <div className="post" key={thread.threadID}>
+                    <p className="post__messages">{thread.postsCount}</p>
+                    <p className="post__username">{thread.User.username}</p>
+                    <p className="post__topic">{thread.title}</p>
+                  </div>
+                );
+              })}
           </div>
           <div className="forum forum--topics">
             <h2 className="forum__title">Topics</h2>
