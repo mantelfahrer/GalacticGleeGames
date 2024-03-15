@@ -98,7 +98,7 @@ export const getSingleUser = async (req: Request, res: Response) => {
     return res.status(404).json({ message: "User not found" });
   }
 
-  console.log("user: " + JSON.stringify(user, null, 2))
+  console.log("user: " + JSON.stringify(user, null, 2));
 
   return res.status(200).json(user);
 };
@@ -109,7 +109,6 @@ export const getSingleUser = async (req: Request, res: Response) => {
  */
 export const loginUser = async (req: Request, res: Response) => {
   const { username, password } = req.body;
-  // let result: User;
 
   if (!username || !password) {
     res.status(400).json({

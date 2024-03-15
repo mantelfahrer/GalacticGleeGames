@@ -1,7 +1,8 @@
 import crypto from "crypto";
 import { Request, Response } from "express";
-import { Thread } from "../db/initialize";
+import { Post, Thread, User } from "../db/initialize";
 import { getAllPostsForThread } from "./posts.controller";
+import { Sequelize } from "sequelize";
 
 /**
  *  @description Create thread
@@ -33,7 +34,24 @@ export const createThread = async (req: Request, res: Response) => {
  *  @route GET /threads
  */
 export const getAllThreads = async (req: Request, res: Response) => {
-  const threads = await Thread.findAll();
+  const threads = await Thread.findAll({
+    attributes: {
+      include: [
+        [Sequelize.fn("COUNT", Sequelize.col("posts.postID")), "postsCount"],
+      ],
+    },
+    include: [
+      {
+        model: User,
+        attributes: { exclude: ["password"] },
+      },
+      {
+        model: Post,
+        attributes: [],
+      },
+    ],
+    group: ["Thread.threadID"],
+  });
 
   return res.status(200).json(threads);
 };
