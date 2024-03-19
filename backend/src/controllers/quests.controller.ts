@@ -8,7 +8,7 @@ import { Quest } from "../db/initialize";
  */
 export const createQuest = async (req: Request, res: Response) => {
   if (req.body.user.role !== "ADMIN") {
-    return res.sendStatus(403);
+    return res.sendStatus(401);
   }
 
   const { title, condition, description } = req.body;
@@ -65,7 +65,7 @@ export const getSingleQuest = async (req: Request, res: Response) => {
  */
 export const updateQuest = async (req: Request, res: Response) => {
   if (req.body.user.role !== "ADMIN") {
-    return res.sendStatus(403);
+    return res.sendStatus(401);
   }
 
   const { questID } = req.params;
@@ -108,7 +108,7 @@ export const updateQuest = async (req: Request, res: Response) => {
  */
 export const deleteQuest = async (req: Request, res: Response) => {
   if (req.body.user.role !== "ADMIN") {
-    return res.sendStatus(403);
+    return res.sendStatus(401);
   }
 
   const { questID } = req.params;

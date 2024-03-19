@@ -57,7 +57,7 @@ export const updateUserQuest = async (req: Request, res: Response) => {
   }
 
   if (req.body.user.userID !== userQuest.userID) {
-    return res.sendStatus(403);
+    return res.sendStatus(401);
   }
 
   if (userQuest.status === status) {
@@ -81,7 +81,7 @@ export const updateUserQuest = async (req: Request, res: Response) => {
  */
 export const updateUserQuestsForUser = async (req: Request, res: Response) => {
   if (req.body.user.role !== "ADMIN") {
-    return res.sendStatus(403);
+    return res.sendStatus(401);
   }
 
   const { userID } = req.params;

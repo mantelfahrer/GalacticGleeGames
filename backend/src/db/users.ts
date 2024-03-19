@@ -27,5 +27,9 @@ export const createModelUser = (sequelize: Sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    lastIssuedTokenAt: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    }
   });
 };

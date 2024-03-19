@@ -78,7 +78,7 @@ export const updatePost = async (req: Request, res: Response) => {
   }
 
   if (post.userID !== user.userID) {
-    return res.sendStatus(403);
+    return res.sendStatus(401);
   }
 
   if (post.content === content) {
@@ -115,7 +115,7 @@ export const deletePost = async (req: Request, res: Response) => {
   }
 
   if (post.userID !== user.userID) {
-    return res.sendStatus(403);
+    return res.sendStatus(401);
   }
 
   const result = await Post.destroy({

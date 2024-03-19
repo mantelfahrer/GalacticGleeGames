@@ -93,7 +93,7 @@ export const updateThread = async (req: Request, res: Response) => {
   }
 
   if (thread.userID !== user.userID) {
-    return res.sendStatus(403);
+    return res.sendStatus(401);
   }
 
   if (thread.title === title) {
@@ -130,7 +130,7 @@ export const deleteThread = async (req: Request, res: Response) => {
   }
 
   if (thread.userID !== user.userID) {
-    return res.sendStatus(403);
+    return res.sendStatus(401);
   }
 
   const result = await Thread.destroy({

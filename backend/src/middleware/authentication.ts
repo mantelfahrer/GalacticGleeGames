@@ -10,12 +10,23 @@ export function generateAccessToken(user: IUser) {
   };
 
   const secret = process.env.JWT_SECRET_KEY || "secret-key";
-  const options = { expiresIn: "1h" };
+  const options = { expiresIn: "10s" };
 
   return jwt.sign(payload, secret, options);
 }
 
-export function verifyAccessToken(token: string) {
+export function generateRefreshToken(user: IUser) {
+  const payload = {
+    userID: user.userID,
+  };
+
+  const secret = process.env.JWT_SECRET_KEY || "secret-key";
+  const options = { expiresIn: "8h" };
+
+  return jwt.sign(payload, secret, options);
+}
+
+export function verifyToken(token: string) {
   const secret = process.env.JWT_SECRET_KEY || "secret-key";
   try {
     const decoded = jwt.verify(token, secret);
@@ -49,7 +60,7 @@ export function authenticateToken(
     return res.status(401).json({ message: "Not logged in" });
   }
 
-  const result = verifyAccessToken(token);
+  const result = verifyToken(token);
 
   if (!result.success) {
     return res.status(403).json({ error: result.error });

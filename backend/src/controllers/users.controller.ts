@@ -1,10 +1,15 @@
 import bcrypt from "bcrypt";
 import crypto from "crypto";
 import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
 import { Request, Response } from "express";
 import { Op } from "sequelize";
 import { Quest, User } from "../db/initialize";
-import { generateAccessToken } from "../middleware/authentication";
+import {
+  generateAccessToken,
+  generateRefreshToken,
+  verifyToken,
+} from "../middleware/authentication";
 import { createUserQuest } from "./userQuests.controller";
 dotenv.config();
 
@@ -72,7 +77,7 @@ export const registerUser = async (req: Request, res: Response) => {
  */
 export const getAllUsers = async (req: Request, res: Response) => {
   if (req.body.user.role !== "ADMIN") {
-    return res.sendStatus(403);
+    return res.sendStatus(401);
   }
 
   const users = await User.findAll({
@@ -130,11 +135,71 @@ export const loginUser = async (req: Request, res: Response) => {
   const comparison = await bcrypt.compare(password, user.password);
 
   if (comparison) {
+    // generate refresh token and save iat value in database
+    const refreshToken = generateRefreshToken(user);
+    const decoded: any = jwt.decode(refreshToken);
+    user.lastIssuedTokenAt = decoded.iat;
+    user.save();
+
     res.status(200).json({
       message: "Login successful",
       token: generateAccessToken(user),
+      refreshToken,
     });
   } else {
     res.status(401).json({ message: "Username and password did not match" });
   }
+};
+
+/**
+ * @description Refresh token
+ * @route POST /users/refresh
+ */
+export const refreshToken = async (req: Request, res: Response) => {
+  const { refreshToken } = req.body;
+
+  if (!refreshToken) {
+    res.status(401).json({
+      message: "Refresh token must be provided",
+    });
+  }
+
+  const result: any = verifyToken(refreshToken);
+
+  if (!result.success) {
+    return res.status(401).json({ error: result.error });
+  }
+
+  const user: any = await User.findOne({
+    where: {
+      userID: result.data.userID,
+    },
+  });
+
+  if (!user) {
+    return res.status(401).json({
+      message: "User not found",
+    });
+  }
+
+  // read lastIssuedTokenAt from database entry and compare with iat from decoded token
+  console.log("database iat: " + user.lastIssuedTokenAt);
+  console.log("token iat: " + result.data.iat);
+  if (result.data.iat < user.lastIssuedTokenAt) {
+    return res.status(401).json({
+      message: "Refresh token expired, please log in",
+    });
+  }
+
+  // generate refresh token and save iat value in database
+  const newRefreshToken = generateRefreshToken(user);
+  const decoded: any = jwt.decode(newRefreshToken);
+  user.lastIssuedTokenAt = decoded.iat;
+  user.save();
+
+  res.status(200).json({
+    message: "Refresh successful",
+    token: generateAccessToken(user),
+    refreshToken: newRefreshToken,
+  });
 };
