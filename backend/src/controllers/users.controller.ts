@@ -141,8 +141,17 @@ export const loginUser = async (req: Request, res: Response) => {
     user.lastIssuedTokenAt = decoded.iat;
     user.save();
 
+    const userWithoutSensitiveData = JSON.parse(JSON.stringify({
+      userID: user.userID,
+      username: user.username,
+      name: user.name,
+      emailAddress: user.emailAddress,
+      role: user.role,
+    }));
+
     res.status(200).json({
       message: "Login successful",
+      user: userWithoutSensitiveData,
       token: generateAccessToken(user),
       refreshToken,
     });
