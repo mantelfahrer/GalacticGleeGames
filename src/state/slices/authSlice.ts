@@ -1,39 +1,44 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { User, UserToLogin } from "../../models/User";
+import { User } from "../../models/User";
+import { apiSlice } from "./apiSlice";
 
 export interface AuthState {
   user?: User;
-  loading: boolean;
-  error: boolean;
+  token?: string;
 }
 
 const initialState: AuthState = {
   user: undefined,
-  loading: false,
-  error: false,
+  token: undefined,
 };
 
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    LOGIN_USER_REQUEST: (state, action: PayloadAction<UserToLogin>) => {
-      state.loading = true;
+    SET_CREDENTIALS: (
+      state,
+      action: PayloadAction<{ token?: string; user?: User }>
+    ) => {
+      state.user = action.payload.user;
+      state.token = action.payload.token;
     },
-    LOGIN_USER_SUCCESS: (state, action: PayloadAction<User>) => {
-      state.user = action.payload;
-      state.loading = false;
-      state.error = false;
-    },
-    LOGIN_USER_FAILURE: (state) => {
+    LOG_OUT: (state) => {
       state.user = undefined;
-      state.loading = false;
-      state.error = true;
+      state.token = undefined;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addMatcher(
+      apiSlice.endpoints.loginUser.matchFulfilled,
+      (state, action) => {
+        state.user = action.payload.user;
+        state.token = action.payload.token;
+      }
+    );
   },
 });
 
-export const { LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE } =
-  authSlice.actions;
+export const { SET_CREDENTIALS, LOG_OUT } = authSlice.actions;
 
 export default authSlice.reducer;

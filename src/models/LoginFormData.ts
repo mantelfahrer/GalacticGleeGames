@@ -1,9 +1,6 @@
-export type LoginFormData = {
-  email: string;
-  password: string;
-};
+import { UserToLogin } from "./User";
 
-export const initialLoginFormData: LoginFormData = {
-  email: "",
+export const initialLoginFormData: UserToLogin = {
+  username: "",
   password: "",
 };

@@ -1,13 +1,8 @@
-import { LoginFormData } from "./LoginFormData";
+import { UserToRegister } from "./User";
 
-export type SignupFormData = LoginFormData & {
-  name: string;
-  username: string;
-};
-
-export const initialSignupFormData: SignupFormData = {
+export const initialSignupFormData: UserToRegister = {
   name: "",
   username: "",
-  email: "",
+  emailAddress: "",
   password: "",
 };

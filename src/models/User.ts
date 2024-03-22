@@ -10,3 +10,8 @@ export type UserToLogin = {
   username: string;
   password: string;
 };
+
+export type UserToRegister = UserToLogin & {
+  name: string;
+  emailAddress: string;
+};

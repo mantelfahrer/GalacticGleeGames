@@ -3,15 +3,13 @@ import Form from "../components/Form";
 import Layout from "../components/Layout";
 import backgroundImage from "../images/BackgroundImages/background-7.png";
 import character from "../images/Characters/sci-fi-character-5.png";
-import {
-  SignupFormData,
-  initialSignupFormData,
-} from "../models/SignupFormData";
+import { initialSignupFormData } from "../models/SignupFormData";
+import { UserToRegister } from "../models/User";
 
 type Props = {};
 
 const Signup: FC<Props> = (props: Props) => {
-  const [formData, setFormData] = React.useState<SignupFormData>(
+  const [formData, setFormData] = React.useState<UserToRegister>(
     initialSignupFormData
   );
 
@@ -69,9 +67,9 @@ const Signup: FC<Props> = (props: Props) => {
               inputAttributes: {
                 placeholder: "Enter your email address",
                 type: "email",
-                name: "email",
+                name: "emailAddress",
                 required: true,
-                value: formData.email,
+                value: formData.emailAddress,
               },
             },
             {

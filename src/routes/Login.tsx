@@ -3,17 +3,24 @@ import Form from "../components/Form";
 import Layout from "../components/Layout";
 import backgroundImage from "../images/BackgroundImages/background-6.png";
 import character from "../images/Characters/sci-fi-character-6.png";
-import { LoginFormData, initialLoginFormData } from "../models/LoginFormData";
+import { initialLoginFormData } from "../models/LoginFormData";
+import { UserToLogin } from "../models/User";
+import { useAppDispatch } from "../state/hooks";
+import { useLoginUserMutation } from "../state/slices/apiSlice";
 
 type Props = {};
 
 const Login: FC<Props> = (props: Props) => {
   const [formData, setFormData] =
-    React.useState<LoginFormData>(initialLoginFormData);
+    React.useState<UserToLogin>(initialLoginFormData);
+
+  const dispatch = useAppDispatch();
+  const [loginUser, { data, error, isSuccess, isError, isLoading }] =
+    useLoginUserMutation();
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
+    loginUser(formData);
   };
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -37,17 +44,17 @@ const Login: FC<Props> = (props: Props) => {
           redirect: {
             text: "Don't have an account, yet?",
             linkText: "Sign up here",
-            to: "/signup"
+            to: "/signup",
           },
           inputFields: [
             {
-              label: "Email address",
+              label: "Username",
               inputAttributes: {
-                placeholder: "Enter your email address",
-                type: "email",
-                name: "email",
+                placeholder: "Enter your username",
+                type: "text",
+                name: "username",
                 required: true,
-                value: formData.email,
+                value: formData.username,
               },
             },
             {
