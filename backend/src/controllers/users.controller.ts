@@ -141,19 +141,25 @@ export const loginUser = async (req: Request, res: Response) => {
     user.lastIssuedTokenAt = decoded.iat;
     user.save();
 
-    const userWithoutSensitiveData = JSON.parse(JSON.stringify({
-      userID: user.userID,
-      username: user.username,
-      name: user.name,
-      emailAddress: user.emailAddress,
-      role: user.role,
-    }));
-
+    // remove sensitive data from user to be able to return it
+    const userWithoutSensitiveData = JSON.parse(
+      JSON.stringify({
+        userID: user.userID,
+        username: user.username,
+        name: user.name,
+        emailAddress: user.emailAddress,
+        role: user.role,
+      })
+    );
+    // set refresh token as cookie in request
+    res.cookie("refreshToken", refreshToken, {
+      maxAge: 1000 * 60 * 60 * 8,
+      httpOnly: true,
+    });
     res.status(200).json({
       message: "Login successful",
       user: userWithoutSensitiveData,
       token: generateAccessToken(user),
-      refreshToken,
     });
   } else {
     res.status(401).json({ message: "Username and password did not match" });
@@ -165,7 +171,7 @@ export const loginUser = async (req: Request, res: Response) => {
  * @route POST /users/refresh
  */
 export const refreshToken = async (req: Request, res: Response) => {
-  const { refreshToken } = req.body;
+  const { refreshToken } = req.cookies;
 
   if (!refreshToken) {
     res.status(401).json({
@@ -192,9 +198,9 @@ export const refreshToken = async (req: Request, res: Response) => {
   }
 
   // read lastIssuedTokenAt from database entry and compare with iat from decoded token
-  console.log("database iat: " + user.lastIssuedTokenAt);
-  console.log("token iat: " + result.data.iat);
   if (result.data.iat < user.lastIssuedTokenAt) {
+    user.lastIssuedTokenAt = Date.now();
+    user.save();
     return res.status(401).json({
       message: "Refresh token expired, please log in",
     });
@@ -206,9 +212,13 @@ export const refreshToken = async (req: Request, res: Response) => {
   user.lastIssuedTokenAt = decoded.iat;
   user.save();
 
+  // set refresh token as cookie in request
+  res.cookie("refreshToken", newRefreshToken, {
+    maxAge: 1000 * 60 * 60 * 8,
+    httpOnly: true,
+  });
   res.status(200).json({
     message: "Refresh successful",
     token: generateAccessToken(user),
-    refreshToken: newRefreshToken,
   });
 };

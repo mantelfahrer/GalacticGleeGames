@@ -5,6 +5,7 @@ import postsRoute from "./routes/posts.routes";
 import questsRoute from "./routes/quests.routes";
 import threadsRoute from "./routes/threads.routes";
 import usersRoute from "./routes/users.routes";
+import cookieParser from 'cookie-parser';
 dotenv.config();
 
 const app = express();
@@ -12,9 +13,11 @@ const app = express();
 const port = process.env.PORT || 8080;
 let corsOptions = {
   origin: "http://localhost:3000",
+  credentials: true,
 };
 
 // middleware
+app.use(cookieParser());
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

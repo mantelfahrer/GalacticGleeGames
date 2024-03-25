@@ -11,7 +11,7 @@ import { authenticateToken } from "../middleware/authentication";
 const router = express.Router();
 
 router.route("/").post(authenticateToken, createThread);
-router.route("/").get(getAllThreads);
+router.route("/").get(authenticateToken, getAllThreads);
 router.route("/:threadID").get(getSingleThread);
 router.route("/:threadID").put(authenticateToken, updateThread);
 router.route("/:threadID").delete(authenticateToken, deleteThread);
