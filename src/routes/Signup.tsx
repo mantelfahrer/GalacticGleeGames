@@ -26,6 +26,10 @@ const Signup: FC<Props> = (props: Props) => {
     <Layout backgroundImage={backgroundImage} color="pink">
       <Form
         data={{
+          isError: false,
+          isLoading: false,
+          isSuccess: false,
+          errorMessage: "",
           title: "Come on in!",
           instruction: [
             "We've got loads of exclusive content and interactive experiences for you to play with. Explore our cosmos and thrive within our community!",

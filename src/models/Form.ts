@@ -2,6 +2,10 @@ import { Color } from "./Color";
 import { InputField } from "./InputField";
 
 export type TFormCard = {
+  isError: boolean;
+  isSuccess: boolean;
+  isLoading: boolean;
+  errorMessage: string;
   color: Color;
   title: string;
   instruction: string[];

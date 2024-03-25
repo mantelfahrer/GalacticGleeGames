@@ -4,6 +4,8 @@ import "./FormCard.scss";
 import Title from "./Title";
 import { TFormCard } from "../models/Form";
 import { Link } from "react-router-dom";
+import SpinnerLoader from "./SpinnerLoader";
+import ProgressLoader from "./ProgressLoader";
 
 type Props = {
   data: TFormCard;
@@ -20,7 +22,9 @@ const FormCard: FC<Props> = ({ data, className }) => {
       {data.redirect && (
         <p className="form-card__redirect-text">
           {data.redirect.text}
-          <Link className="form-card__redirect-link" to={data.redirect.to}>{data.redirect.linkText}</Link>
+          <Link className="form-card__redirect-link" to={data.redirect.to}>
+            {data.redirect.linkText}
+          </Link>
         </p>
       )}
       {data.inputFields.map((field) => {
@@ -49,6 +53,7 @@ const FormCard: FC<Props> = ({ data, className }) => {
                 {...field.inputAttributes}
               />
             )}
+            <p>{data.errorMessage}</p>
           </div>
         );
       })}
@@ -56,7 +61,9 @@ const FormCard: FC<Props> = ({ data, className }) => {
         type="submit"
         value={data.submitText}
         className="form-card__submit"
+        disabled={data.isLoading}
       />
+      {data.isLoading && <ProgressLoader className="form-card__progress" />}
     </form>
   );
 };

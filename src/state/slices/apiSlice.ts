@@ -11,7 +11,7 @@ import { User, UserToLogin, UserToRegister } from "../../models/User";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: "http://localhost:8080",
-  // credentials: "include",
+  credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
     if (token) {
@@ -56,7 +56,7 @@ export const apiSlice = createApi({
       query: () => "/users/signup",
     }),
     loginUser: builder.mutation<
-      { token: string; refreshToken: string; user: User },
+      { token: string; user: User },
       UserToLogin
     >({
       query: ({ ...user }) => ({

@@ -28,6 +28,10 @@ const Contact: FC<Props> = (props: Props) => {
     <Layout backgroundImage={backgroundImage} color="blue-light">
       <Form
         data={{
+          isError: false,
+          isLoading: false,
+          isSuccess: false,
+          errorMessage: "",
           title: "Contact us!",
           instruction: [
             "Feel free to write us your thoughts, feedback and whatever you want.",
